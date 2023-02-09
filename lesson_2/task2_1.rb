@@ -14,7 +14,7 @@ months = {
 }
 
 months.each do |k, v|
-    if v == 30 
-        puts k
-    end
+  if v == 30 
+    puts k
+  end
 end
