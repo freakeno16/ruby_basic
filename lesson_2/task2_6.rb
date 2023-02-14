@@ -1,5 +1,5 @@
 hash = {}
-value = 0
+final_cost = 0
 
 loop do 
   p "name: "
@@ -16,7 +16,7 @@ loop do
   each_cost = cost * count
   p each_cost 
   
-  value += each_cost
+  final_cost += each_cost
   p 'print stop if u want to stop:'
 
   break if gets.chomp == "stop"
@@ -24,4 +24,4 @@ end
 
 p hash
 
-p "final cost: #{value}"
+p "final cost: #{final_cost}"
