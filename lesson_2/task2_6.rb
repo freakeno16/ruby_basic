@@ -10,13 +10,14 @@ loop do
   
   p "How many: "
   count = gets.to_i
-  
-  hash[name.to_sym] = { cost: cost, count: count }
 
   each_cost = cost * count
-  p each_cost 
+  
+  hash[name.to_sym] = { cost: cost, count: count, each_cost: each_cost }
+
   
   final_cost += each_cost
+  
   p 'print stop if u want to stop:'
 
   break if gets.chomp == "stop"
