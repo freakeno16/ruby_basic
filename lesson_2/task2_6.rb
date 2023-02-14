@@ -1,5 +1,6 @@
 hash = {}
-value = 0
+final_cost = 0
+
 loop do 
   p "name: "
   name = gets.chomp
@@ -9,16 +10,18 @@ loop do
   
   p "How many: "
   count = gets.to_i
-  
-  hash[name.to_sym] = { cost: cost, count: count }
+
   each_cost = cost * count
-  p each_cost
-  value += each_cost
-  puts 'print stop if u want to stop:'
+  
+  hash[name.to_sym] = { cost: cost, count: count, each_cost: each_cost }
+
+  
+  final_cost += each_cost
+  p 'print stop if u want to stop:'
 
   break if gets.chomp == "stop"
 end
 
 p hash
 
-p "final cost: #{value}"
+p "final cost: #{final_cost}"
