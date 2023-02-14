@@ -1,8 +1,13 @@
-abc = {}
-abc[:a] = 1
-abc[:e] = 2
-abc[:i] = 3
-abc[:o] = 4
-abc[:u] = 5
-abc[:y] = 6
-p abc
+# 0 1 1 2 3 5 8 13 21 ....
+
+array = [0, 1]
+
+loop do
+  i = array[-1] + array[-2]
+  
+  break if i > 100
+
+  array << i 
+end
+
+p array
