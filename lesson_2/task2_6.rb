@@ -14,7 +14,6 @@ loop do
   each_cost = cost * count
   
   hash[name.to_sym] = { cost: cost, count: count, each_cost: each_cost }
-
   
   final_cost += each_cost
   
