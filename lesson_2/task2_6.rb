@@ -9,7 +9,7 @@ loop do
   cost = gets.to_f
   
   p "How many: "
-  count = gets.to_i
+  count = gets.to_f
 
   each_cost = cost * count
   
