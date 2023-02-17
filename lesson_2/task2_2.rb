@@ -1,7 +1,5 @@
 array = []
-
 for i in 10..100 do
-  if i % 5 == 0
-  array << i
-  end
+  array << i if i % 5 == 0
 end
+p array
