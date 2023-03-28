@@ -1,5 +1,4 @@
 class Train
-  
   attr_reader :number, :type, :wagons
   attr_accessor :current_speed, :route
   
@@ -8,7 +7,7 @@ class Train
   def initialize(number, type, wagons)
     @number = number
     @type = type
-    @wagons = wagons
+    @wagons = wagons.length
     @current_speed = 0 
   end
 
@@ -62,9 +61,3 @@ class Train
     p "next: #{route[@@index + 1]}"
   end
 end
-
-train = Train.new(1488, "passenger", 8)
-train.set_route(["Zavodskaya", "Vikulova", "Kraulya", "Radik"])
-p train.route
-train.next_station
-train.prev_curr_next
