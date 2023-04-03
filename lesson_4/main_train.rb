@@ -22,7 +22,7 @@ class Train
   end
   
   def add_wagon
-    if @current_speed == 0 
+    if @current_speed.zero?
       @wagons += 1
     else 
       p "Stop the fckn train, idiot!"
@@ -30,7 +30,8 @@ class Train
   end
 
   def remove_wagon
-    if @current_speed == 0
+    if @current_speed.zero?
+
       @wagons -= 1
     else  
       p "Stop the fckn train, idiot!"
