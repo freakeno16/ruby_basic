@@ -15,13 +15,10 @@ loop do
   
   hash[name.to_sym] = { cost: cost, count: count, each_cost: each_cost }
 
-  
   final_cost += each_cost
   p 'print stop if u want to stop:'
-
   break if gets.chomp == "stop"
 end
 
 p hash
-
 p "final cost: #{final_cost}"
