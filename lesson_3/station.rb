@@ -1,57 +1,40 @@
 class Station 
-  @@passenger_train = 0
-  @@freight_train = 0
+  attr_reader :trains
 
   def initialize(name)
     @name = name
+    @trains = []
+    @passenger_train = 0
+    @freight_train = 0
   end
   
-  def show_trains
-    p "You have #{@@passenger_train + @@freight_train} trains on a station"
-  end
-  
-  def add_freight_train
-    @@freight_train += 1
-    p "You added a freight_train"
+  def add_train(type)
+    if type == "passenger"
+      @trains << type
+      @passenger_train += 1
+
+    elsif type == "freight"
+      @trains << type
+      @freight_train += 1
+    end
   end
 
-  def remove_freight_train
-    @@freight_train -= 1
-    p "You removed one freight train"
+  def remove_train(index)
+    @trains.delete_at(index)
   end
 
-  def add_passenger_train
-    @@passenger_train += 1
-    p "You added a passenger_train"
-  end
-
-  def remove_passenger_train
-    @@passenger_train -= 1
-    p "You removed one passenger train"
-  end
-
-  def show_types
-    p "There's #{@@passenger_train} passenger trains and #{@@freight_train} freight trains on a station"
+  def train_types
+    p "passenger trains: #{@passenger_train}"
+    p "freight trains: #{@freight_train}"
   end
 end
-  
-class Train < Station
-  def initialize(name)
-    @name = name
-  end
-end
-  
-train = Train.new("train1")
 
-train.add_freight_train
-train.add_freight_train
-train.add_freight_train
-train.add_passenger_train
-train.add_passenger_train
+station = Station.new("Station")
 
-train.remove_freight_train
-  
-station = Station.new("station")
-  
-station.show_trains
-station.show_types
+station.add_train("passenger")
+station.add_train("freight")
+station.add_train("passenger")
+station.add_train("freight")
+
+p station.trains
+station.train_types
