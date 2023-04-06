@@ -3,7 +3,7 @@ require_relative 'passenger_train.rb'
 require_relative 'route.rb'
 require_relative 'station.rb'
 
-class Trin
+class Train
   attr_reader :number, :type, :wagons, :route
   attr_accessor :current_speed
   
