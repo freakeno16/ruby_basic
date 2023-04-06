@@ -66,13 +66,3 @@ class Train
   end
 end
   
-train = Train.new(1488, "passenger", 8)
-  
-train.set_route(["Zavodskaya", "Vikulova", "Kraulya", "Radik"])
-p train.route
-train.next_station
-train.prev_curr_next
-p train
-  
-train.remove_wagon
-  
