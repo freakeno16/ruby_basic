@@ -9,8 +9,8 @@ class Route
     p @stations
   end
 
-  def add_station(station)
-    @stations.insert(-2, station)
+  def add_station(index, station)
+    @stations.insert(index, station)
   end
     
   def remove_station(station)
@@ -21,8 +21,5 @@ end
 route = Route.new("Zavodskaya", "Radik")
 route.show_stations
 
-route.add_station("Vikulova", 1)
-route.add_station("Kraulya", 2)
-route.show_stations
-route.remove_station(2) 
+route.add_station(-2, "Vikulova")
 route.show_stations

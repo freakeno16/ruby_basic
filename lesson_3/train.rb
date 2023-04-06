@@ -1,15 +1,13 @@
 class Train
-  
-  attr_reader :number, :type, :wagons
-  attr_accessor :current_speed, :route
-  
-  @@index = 0
+  attr_reader :number, :type, :wagons, :route
+  attr_accessor :current_speed
 
   def initialize(number, type, wagons)
     @number = number
     @type = type
     @wagons = wagons
     @current_speed = 0 
+    @index = 0
   end
 
   def speed_up(speed)
@@ -18,12 +16,12 @@ class Train
   end
 
   def stop
-    @current_speed -= @current_speed
+    @current_speed == 0
     p "Your current speed: #{@current_speed}"
   end
   
   def add_wagon
-    if @current_speed == 0 
+    if @current_speed == 0
       @wagons += 1
     else 
       p "Stop the fckn train, idiot!"
@@ -31,7 +29,7 @@ class Train
   end
 
   def remove_wagon
-    if @current_speed == 0
+    if @current_speed == 0 && wagons > 0
       @wagons -= 1
     else  
       p "Stop the fckn train, idiot!"
@@ -45,26 +43,30 @@ class Train
   end
 
   def next_station
-    @@index += 1
-    @current_station = @route[@@index]
+    @index += 1
+    @current_station = @route[@index]
     p "Current station is #{@current_station}"
   end
 
   def prev_station
-    @@index -= 1
-    @current_station = @route[@@index]
+    @index -= 1
+    @current_station = @route[@index]
     p "Current station is #{@current_station}"
   end
 
   def prev_curr_next
-    p "current: #{@route[@@index]}"
-    p "previous: #{route[@@index - 1]}"
-    p "next: #{route[@@index + 1]}"
+    p "current: #{@route[@index]}"
+    p "previous: #{route[@index - 1]}"
+    p "next: #{route[@index + 1]}"
   end
 end
 
 train = Train.new(1488, "passenger", 8)
+
 train.set_route(["Zavodskaya", "Vikulova", "Kraulya", "Radik"])
 p train.route
 train.next_station
 train.prev_curr_next
+p train
+
+train.remove_wagon
