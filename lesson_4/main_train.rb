@@ -1,8 +1,3 @@
-require_relative 'freight_train.rb'
-require_relative 'passenger_train.rb'
-require_relative 'route.rb'
-require_relative 'station.rb'
-
 class Train
   attr_reader :number, :type, :wagons, :route
   attr_accessor :current_speed
@@ -66,3 +61,12 @@ class Train
   end
 end
   
+train = Train.new(1488, "passenger", 8)
+  
+train.set_route(["Zavodskaya", "Vikulova", "Kraulya", "Radik"])
+p train.route
+train.next_station
+train.prev_curr_next
+p train
+  
+train.remove_wagon
