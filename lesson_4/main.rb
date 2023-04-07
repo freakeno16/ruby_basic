@@ -4,6 +4,37 @@ require_relative 'freight_train'
 require_relative 'station.rb'
 require_relative 'route.rb'
 
+def handle_user_command(command)
+
+  case command
+
+  when "create new station"
+    create_new_station
+
+  when "create new train"
+    create_new_train
+
+  when "create new route"
+    create_new_route
+
+  when "train set route"
+    train_set_route
+
+  when "train add wagon"
+    train_add_wagon
+  
+  when "train_remove_wagon"
+    train_remove_wagon
+  
+  when "train move"
+    train_move
+
+  when "show stations and trains"
+    show_stations_and_trains
+  end
+end
+
+
 def create_new_station
   p "Enter class of new station: "
   station_class_name = gets.chomp
