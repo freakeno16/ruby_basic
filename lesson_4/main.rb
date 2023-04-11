@@ -1,6 +1,6 @@
-require_relative 'main_train'
-require_relative 'passenger_train'
-require_relative 'freight_train'
+require_relative 'main_train.rb'
+require_relative 'passenger_train.rb'
+require_relative 'freight_train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
 
