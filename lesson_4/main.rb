@@ -17,6 +17,9 @@ def handle_user_command(command)
   when "create new route"
     create_new_route
 
+  when "route menu"
+    route_menu
+
   when "train set route"
     train_set_route
 
@@ -47,14 +50,11 @@ def create_new_station
 end
 
 def create_new_train
-  p "Enter class of new train: "
+  p "Enter class name of new train: "
   train_class_name = gets.chomp
 
   p "Enter name of new train: "
   train_name = gets.chomp
-
-  train_class_name = Train.new(train_name)
-  p train_class_name
 
   p "Enter type of new train: "
   train_type = gets.chomp
@@ -75,20 +75,23 @@ def create_new_train
 end
 
 def create_new_route
+
+  p "Enter class name of new route: "
+  route_class_name = gets.chomp
+  p "Enter name of first station: "
+  first_station = gets.chomp
+  p "Enter name of last station: "
+  last_station = gets.chomp
+  
+  route_class_name = Route.new([first_station, last_station])
+end
+
+def route_menu
+
   route_choice = gets.chomp
 
   case route_choice
   
-  when "new"
-    p "Enter class name of new route: "
-    route_class_name = gets.chomp
-    p "Enter name of first station: "
-    first_station = gets.chomp
-    p "Enter name of last station: "
-    last_station = gets.chomp
-    
-    route_class_name = Route.new([first_station, last_station])
-    
   when "add"
     p "Enter name of station that you want to add: "
     station_name = gets.chomp
