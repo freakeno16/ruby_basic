@@ -2,7 +2,7 @@ class Train
   attr_reader :number, :type, :wagons, :route
   attr_accessor :current_speed
   
-  def initialize(number, type, wagons)
+  def initialize(number, type)
     @number = number
     @type = type
     @wagons = []
@@ -28,8 +28,8 @@ class Train
     end
   end
   
-  def remove_wagon
-    if @current_speed == 0 && wagon.any?
+  def remove_wagon(wagon)
+    if @current_speed == 0 && @wagons.any?
       @wagons.delete(wagon)
     else  
       p "Stop the fckn train, idiot!"
