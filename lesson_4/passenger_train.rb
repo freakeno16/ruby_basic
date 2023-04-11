@@ -1,5 +1,5 @@
 class PassengerTrain < Train
-  def initialize(number, type, wagons)
+  def initialize(number, type)
     super
   end
 end
