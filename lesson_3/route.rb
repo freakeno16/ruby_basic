@@ -1,4 +1,5 @@
 class Route
+  attr_reader :stations
   def initialize(starting, ending)
     @starting = starting
     @ending = ending
@@ -17,9 +18,3 @@ class Route
     @stations.delete(station)
   end
 end
-
-route = Route.new("Zavodskaya", "Radik")
-route.show_stations
-
-route.add_station(-2, "Vikulova")
-route.show_stations
