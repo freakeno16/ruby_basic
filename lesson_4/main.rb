@@ -4,7 +4,11 @@ require_relative 'freight_train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
 
-def handle_user_command(command)
+routes = []
+
+def handle_user_command
+
+  command = gets.chomp
 
   case command
 
@@ -13,9 +17,6 @@ def handle_user_command(command)
 
   when "create new train"
     create_new_train
-
-  when "create new route"
-    create_new_route
 
   when "route menu"
     route_menu
@@ -37,9 +38,8 @@ def handle_user_command(command)
   end
 end
 
-
 def create_new_station
-  p "Enter class of new station: "
+  p "Enter class name of new station: "
   station_class_name = gets.chomp
 
   p "Enter name of new station: "
@@ -53,8 +53,8 @@ def create_new_train
   p "Enter class name of new train: "
   train_class_name = gets.chomp
 
-  p "Enter name of new train: "
-  train_name = gets.chomp
+  p "Enter number of new train: "
+  train_number = gets.chomp
 
   p "Enter type of new train: "
   train_type = gets.chomp
@@ -62,11 +62,11 @@ def create_new_train
   case train_type 
 
   when "passenger"
-   train_class_name = PassengerTrain.new(train_name)
+   train_class_name = PassengerTrain.new(train_number)
    p train_class_name
 
   when "freight"
-    train_class_name = FreightTrain.new(train_name)
+    train_class_name = FreightTrain.new(train_number)
     p train_class_name
 
   else 
@@ -74,35 +74,67 @@ def create_new_train
   end
 end
 
-def create_new_route
-
-  p "Enter class name of new route: "
-  route_class_name = gets.chomp
-  p "Enter name of first station: "
-  first_station = gets.chomp
-  p "Enter name of last station: "
-  last_station = gets.chomp
-  
-  route_class_name = Route.new([first_station, last_station])
-end
-
 def route_menu
-
+  p "Enter 'new' to create new station"
+  p "Enter 'choose' to manage"
   route_choice = gets.chomp
 
   case route_choice
-  
-  when "add"
+  when "new"   
+    p "Enter name of new route: "
+    route_name = gets.chomp
+    p "Enter class name of new route: "
+    @route_class_name = gets.chomp
+    p "Enter name of first station: "
+    first_station = gets.chomp
+    p "Enter name of last station: "
+    last_station = gets.chomp
+    
+    @route_class_name = Route.new(route_name, first_station, last_station)
+    routes.push(@route_class_name)
+    p routes
+
+  when "choose"
+    p "Enter 'add'/'remove' to manage"
+    route_choice = gets.chomp
+
+  case route_choice
+    when "add"
+    p "Enter route name that you want to change: "
+    route_name = gets.chomp
+
+    for i in $routes
+      if i.name == route_name
+        @route_class_name = i
+      end
+    end
+
     p "Enter name of station that you want to add: "
     station_name = gets.chomp
-    route_class_name.add_station(index, station_name)
+    p "Where do you want to add station?: "
+    index = gets.to_i
+    @route_class_name.add_station(index, station_name)
+    p @route_class_name
   
-  when "remove"
+    when "remove"
+    p "Enter name of route that you want to change: "
+    route_name = gets.chomp
+
+    for i in $routes
+      if i.name == route_name
+        @route_class_name = i
+      end
+    end
+
     p "Enter name of station that you want to remove: "
     station_name = gets.chomp
-    route_class_name.remove_station(station_name)
+    @route_class_name.remove_station(station_name)
+    p routes
+  
+    else p "Error!"
+    end
   end
-end 
+end
 
 def train_set_route
   p "Enter train class name for set route: "
@@ -160,4 +192,11 @@ def show_stations_and_trains
   p "Enter name of station that you want to for train: "
   station_class_name = gets.chomp
   station_class_name.trains
+end
+
+loop do 
+  p "Choose your destiny: "
+  handle_user_command
+  p "print 'exit' if you want to stop"
+  break if gets.chomp == "exit"
 end
