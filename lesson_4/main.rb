@@ -4,7 +4,8 @@ require_relative 'freight_train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
 
-routes = []
+$routes = []
+$trains = []
 
 def handle_user_command
 
@@ -65,15 +66,30 @@ def create_new_train
   case train_type 
 
   when "passenger"
-   train_class_name = PassengerTrain.new(train_name, train_number)
-   p train_class_name
+   @train_class_name = PassengerTrain.new(train_name, train_number)
+
+   $trains.each do |i|
+    if i.name == train_name
+      @train_class_name = i
+    end
+  end
+
+   $trains.push(@train_class_name)
+   p "Trains: #{$trains}"
 
   when "freight"
-    train_class_name = FreightTrain.new(train_name, train_number)
-    p train_class_name
+    @train_class_name = FreightTrain.new(train_name, train_number)
 
-  else 
-    p "Error!"
+    $trains.each do |i|
+      if i.name == train_name
+        @train_class_name = i
+      end
+    end  
+
+    $trains.push(@train_class_name)
+    p "Trains: #{$trains}" 
+
+  else p "Error!"
   end
 end
 
@@ -94,8 +110,8 @@ def route_menu
     last_station = gets.chomp
     
     @route_class_name = Route.new(route_name, first_station, last_station)
-    routes.push(@route_class_name)
-    p routes
+    $routes.push(@route_class_name)
+    p "Routes: #{$routes}"
 
   when "choose"
     p "Enter 'add'/'remove' to manage"
@@ -106,7 +122,7 @@ def route_menu
     p "Enter route name that you want to change: "
     route_name = gets.chomp
 
-    for i in $routes
+    $routes.each do |i|
       if i.name == route_name
         @route_class_name = i
       end
@@ -123,7 +139,7 @@ def route_menu
     p "Enter name of route that you want to change: "
     route_name = gets.chomp
 
-    for i in $routes
+    $routes.each do |i|
       if i.name == route_name
         @route_class_name = i
       end
@@ -132,7 +148,7 @@ def route_menu
     p "Enter name of station that you want to remove: "
     station_name = gets.chomp
     @route_class_name.remove_station(station_name)
-    p routes
+    p @route_class_name
   
     else p "Error!"
     end
@@ -140,23 +156,34 @@ def route_menu
 end
 
 def train_set_route
-  p "Enter train class name for set route: "
-  train_class_name = gets.chomp
+  p "Enter train name for set route: "
+  train_name = gets.chomp
+
+  for i in $trains
+    if i.name == train_name
+      @train_class_name = i
+    end
+  end
+
   p "Enter name of route: "
   route_name = gets.chomp
-  train_class_name.set_route(route_name)
+
+  for i in $routes
+    if i.name == route_name
+      @route_class_name = i
+    end
+  end
+
+  @train_class_name.set_route(route_name)
 end
 
 def train_add_wagon
-  p "Enter name class train: "
-  train_class_name = gets.chomp
+  p "Enter train name : "
+  train_name = gets.chomp
   p "Enter type of wagon: "
   wagon_type = gets.chomp
-  if @current_speed == 0
-    train_class_name.add_wagon(wagon_type)
-  else 
-    p "Stop the fckn train, idiot!"
-  end
+
+  @train_class_name.add_wagon(wagon_type)
 end
 
 def train_remove_wagon
