@@ -21,8 +21,9 @@ class Train
   end
     
   def add_wagon(wagon)
-    if @current_speed == 0
+    if @current_speed == 0 
       @wagons << wagon 
+      p @wagons
     else 
     p "Stop the fckn train, idiot!"
     end
