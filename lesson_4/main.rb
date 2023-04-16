@@ -50,6 +50,9 @@ def create_new_station
 end
 
 def create_new_train
+  p "Enter name of new train: "
+  train_name = gets.chomp
+
   p "Enter class name of new train: "
   train_class_name = gets.chomp
 
@@ -62,11 +65,11 @@ def create_new_train
   case train_type 
 
   when "passenger"
-   train_class_name = PassengerTrain.new(train_number)
+   train_class_name = PassengerTrain.new(train_name, train_number)
    p train_class_name
 
   when "freight"
-    train_class_name = FreightTrain.new(train_number)
+    train_class_name = FreightTrain.new(train_name, train_number)
     p train_class_name
 
   else 

@@ -1,8 +1,9 @@
 class Train
-  attr_reader :number, :type, :wagons, :route
+  attr_reader :name, :number, :type, :wagons, :route 
   attr_accessor :current_speed
   
-  def initialize(number)
+  def initialize(name, number)
+    @name = name
     @number = number
     @wagons = []
     @current_speed = 0 
@@ -38,6 +39,7 @@ class Train
   def set_route(route)
     @route = route
     @current_station = @route[0]
+    p "Route '#{@route}' has been set"
     p "Your current station is #{@current_station}"
   end
   
