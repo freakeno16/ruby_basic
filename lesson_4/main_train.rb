@@ -29,9 +29,10 @@ class Train
     end
   end
   
-  def remove_wagon(wagon)
+  def remove_wagon(index)
     if @current_speed == 0 && @wagons.any?
-      @wagons.delete(wagon)
+      @wagons.delete_at(index)
+      p @wagons
     else  
       p "Stop the fckn train, idiot!"
     end

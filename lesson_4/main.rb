@@ -28,7 +28,7 @@ def handle_user_command
   when "train add wagon"
     train_add_wagon
   
-  when "train_remove_wagon"
+  when "train remove wagon"
     train_remove_wagon
   
   when "train move"
@@ -178,24 +178,44 @@ def train_set_route
 end
 
 def train_add_wagon
+  p "Enter train class name: "
+  @train_class_name = gets.chomp
   p "Enter train name : "
   train_name = gets.chomp
+
+  for i in $trains
+    if i.name == train_name
+      @train_class_name = i
+    end
+  end
+
   p "Enter type of wagon: "
   wagon_type = gets.chomp
-
-  @train_class_name.add_wagon(wagon_type)
+  p @train_class_name
+  
+  if wagon_type == @train_class_name.train_type then @train_class_name.add_wagon(wagon_type)
+    p "Wagon was added to #{@train_class_name} train"
+  else p "Wrong type of wagon!"
+  end
 end
 
 def train_remove_wagon
   p "Enter name class train: "
-  train_class_name = gets.chomp 
-  p "Enter type of wagon: "
-  wagon_type = gets.chomp
-  if @current_speed == 0 && wagons > 0
-    train_class_name.remove_wagon(wagon_type)
-  else  
-    p "Stop the fckn train, idiot!"
+  @train_class_name = gets.chomp
+  p "Enter train name: "
+  train_name = gets.chomp
+
+  for i in $trains
+    if i.name == train_name
+      @train_class_name = i
+    end
   end
+
+  p "Enter wagon index: "
+  index = gets.to_i
+
+  @train_class_name.remove_wagon(index)
+  p "Wagon was removed from #{@train_class_name} train"
 end
 
 def train_move
