@@ -66,16 +66,16 @@ def create_new_train
   case train_type 
 
   when "passenger"
-   @train_class_name = PassengerTrain.new(train_name, train_number)
+    @train_class_name = PassengerTrain.new(train_name, train_number)
 
-   $trains.each do |i|
-    if i.name == train_name
-      @train_class_name = i
+    $trains.each do |i|
+      if i.name == train_name
+        @train_class_name = i
+      end
     end
-  end
 
-   $trains.push(@train_class_name)
-   p "Trains: #{$trains}"
+    $trains.push(@train_class_name)
+    p "Trains: #{$trains.map{ |t| t.name }}" 
 
   when "freight"
     @train_class_name = FreightTrain.new(train_name, train_number)
@@ -87,8 +87,8 @@ def create_new_train
     end  
 
     $trains.push(@train_class_name)
-    p "Trains: #{$trains}" 
-
+    p "Trains: #{$trains.map{ |t| t.name }}" 
+    
   else p "Error!"
   end
 end
@@ -111,14 +111,14 @@ def route_menu
     
     @route_class_name = Route.new(route_name, first_station, last_station)
     $routes.push(@route_class_name)
-    p "Routes: #{$routes}"
+    p "Routes: #{$routes.map{ |r| r.name }}"
 
   when "choose"
     p "Enter 'add'/'remove' to manage"
     route_choice = gets.chomp
 
   case route_choice
-    when "add"
+  when "add"
     p "Enter route name that you want to change: "
     route_name = gets.chomp
 
@@ -135,7 +135,7 @@ def route_menu
     @route_class_name.add_station(index, station_name)
     p @route_class_name
   
-    when "remove"
+  when "remove"
     p "Enter name of route that you want to change: "
     route_name = gets.chomp
 
@@ -156,6 +156,8 @@ def route_menu
 end
 
 def train_set_route
+  p "Enter train class name for set route: "
+  @train_class_name = gets.chomp
   p "Enter train name for set route: "
   train_name = gets.chomp
 
@@ -168,13 +170,9 @@ def train_set_route
   p "Enter name of route: "
   route_name = gets.chomp
 
-  for i in $routes
-    if i.name == route_name
-      @route_class_name = i
-    end
-  end
-
-  @train_class_name.set_route(route_name)
+  @train_class_name.set_route(@route_class_name)
+  p $routes
+  p "Your current station is #{@route_class_name.stations[0]}"
 end
 
 def train_add_wagon
@@ -191,10 +189,10 @@ def train_add_wagon
 
   p "Enter type of wagon: "
   wagon_type = gets.chomp
-  p @train_class_name
   
   if wagon_type == @train_class_name.train_type then @train_class_name.add_wagon(wagon_type)
     p "Wagon was added to #{@train_class_name} train"
+    p @train_class_name
   else p "Wrong type of wagon!"
   end
 end

@@ -23,7 +23,6 @@ class Train
   def add_wagon(wagon)
     if @current_speed == 0 
       @wagons << wagon 
-      p @wagons
     else 
     p "Stop the fckn train, idiot!"
     end
@@ -40,9 +39,7 @@ class Train
   
   def set_route(route)
     @route = route
-    @current_station = @route[0]
     p "Route '#{@route}' has been set"
-    p "Your current station is #{@current_station}"
   end
   
   def next_station
