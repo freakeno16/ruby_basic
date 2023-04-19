@@ -1,6 +1,6 @@
 class Train
   attr_reader :name, :number, :type, :wagons, :route 
-  attr_accessor :current_speed
+  attr_accessor :current_speed, :index
   
   def initialize(name, number)
     @name = name
@@ -44,13 +44,13 @@ class Train
   
   def next_station
     @index += 1
-    @current_station = @route[@index]
+    @current_station = @route.stations[@index]
     p "Current station is #{@current_station}"
   end
   
   def prev_station
     @index -= 1
-    @current_station = @route[@index]
+    @current_station = @route.stations[@index]
     p "Current station is #{@current_station}"
   end
   
