@@ -217,19 +217,38 @@ def train_remove_wagon
 end
 
 def train_move
+  p "Where do you want to move (forward/back)?"
   train_move = gets.chomp
 
   case train_move
   
   when "forward"
-    p "Enter train that you want to move: "
-    train_class_name = gets.chomp
-    train_class_name.next_station
+    p "Enter train class name that you want to move: "
+    @train_class_name = gets.chomp
+    p "Enter train name: "
+    train_name = gets.chomp
+
+    for i in $trains
+      if i.name == train_name
+        @train_class_name = i
+      end
+    end
+
+    @train_class_name.next_station
 
   when "back"
-    p "Enter train that you want to move: "
-    train_class_name = gets.chomp
-    train_class_name.prev_station
+    p "Enter train class name that you want to move: "
+    @train_class_name = gets.chomp
+    p "Enter train name: "
+    train_name = gets.chomp
+
+    for i in $trains
+      if i.name == train_name
+        @train_class_name = i
+      end
+    end
+
+    @train_class_name.prev_station
   end
 end
 
