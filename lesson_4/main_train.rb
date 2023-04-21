@@ -56,7 +56,7 @@ class Train
   
   def prev_curr_next
     p "current: #{@route[@index]}"
-    p "previous: #{route[@index - 1]}"
-    p "next: #{route[@index + 1]}"
+    p "previous: #{route.stations[@index - 1]}"
+    p "next: #{route.stations[@index + 1]}"
   end
 end

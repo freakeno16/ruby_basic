@@ -6,6 +6,7 @@ require_relative 'route.rb'
 
 $routes = []
 $trains = []
+$stations = []
 
 def handle_user_command
 
@@ -41,13 +42,21 @@ end
 
 def create_new_station
   p "Enter class name of new station: "
-  station_class_name = gets.chomp
+  @station_class_name = gets.chomp
 
   p "Enter name of new station: "
   station_name = gets.chomp
 
-  station_class_name = Station.new(station_name)
-  p station_class_name
+  @station_class_name = Station.new(station_name)
+
+  $stations.each do |i|
+    if i.name == station_name
+      @station_class_name = i
+    end
+  end
+
+  $stations.push(@station_class_name)
+  p "Stations: #{$stations.map { |s| s.name }}"
 end
 
 def create_new_train
@@ -75,7 +84,7 @@ def create_new_train
     end
 
     $trains.push(@train_class_name)
-    p "Trains: #{$trains.map{ |t| t.name }}" 
+    p "Trains: #{$trains.map{ |t| t.name } }" 
 
   when "freight"
     @train_class_name = FreightTrain.new(train_name, train_number)
@@ -253,12 +262,31 @@ def train_move
 end
 
 def show_stations_and_trains
-  p "Enter name of route that you want to view: "
-  route_class_name = gets.chomp
-  route_class_name.show_stations
-  p "Enter name of station that you want to for train: "
-  station_class_name = gets.chomp
-  station_class_name.trains
+  p "Enter class name of route that you want to view: "
+  @route_class_name = gets.chomp
+  p "Enter route name: "
+  route_name = gets.chomp
+
+  $routes.each do |i|
+    if i.name == route_name
+      @route_class_name = i
+    end
+  end
+
+  @route_class_name.show_stations
+
+  p "Enter class name of station that you want view for train: "
+  @station_class_name = gets.chomp
+  p "Enter name of station: "
+  station_name = gets.chomp
+
+  $stations.each do |i|
+    if i.name == station_name
+      @station_class_name = i
+    end
+  end
+
+  p @station_class_name.trains
 end
 
 loop do 

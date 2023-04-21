@@ -8,7 +8,7 @@ class Route
   end
 
   def show_stations
-    p @stations
+    @stations.each { |s| p s }
   end
 
   def add_station(index, station)
