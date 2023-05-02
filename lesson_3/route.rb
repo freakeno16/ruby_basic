@@ -1,13 +1,14 @@
 class Route
-  attr_reader :stations
-  def initialize(starting, ending)
+  attr_reader :stations, :name
+  def initialize(name, starting, ending)
+    @name = name
     @starting = starting
     @ending = ending
     @stations = [@starting, @ending]
   end
 
   def show_stations
-    p @stations
+    @stations.each { |s| p s }
   end
 
   def add_station(index, station)
