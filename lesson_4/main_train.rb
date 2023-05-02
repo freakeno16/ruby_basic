@@ -1,13 +1,19 @@
 class Train
   attr_reader :name, :number, :type, :wagons, :route 
   attr_accessor :current_speed, :index
+
+  TRAIN_TYPES = [
+    PASSENGER = "passenger",
+    FREIGHT = "freight"
+  ].freeze
   
-  def initialize(name, number)
+  def initialize(name, number, type)
+    raise StandardError("undefined train type") unless TRAIN_TYPES.include?(type)
     @name = name
     @number = number
+    @type = type
     @wagons = []
     @current_speed = 0 
-    @index = 0
   end
   
   def speed_up(speed)
@@ -16,7 +22,7 @@ class Train
   end
   
   def stop
-    @current_speed == 0
+    @current_speed = 0
     p "Your current speed: #{@current_speed}"
   end
     
@@ -28,9 +34,9 @@ class Train
     end
   end
   
-  def remove_wagon(index)
+  def remove_wagon(wagon)
     if @current_speed == 0 && @wagons.any?
-      @wagons.delete_at(index)
+      @wagons.delete(wagon)
       p @wagons
     else  
       p "Stop the fckn train, idiot!"
@@ -42,21 +48,32 @@ class Train
     p "Route '#{@route}' has been set"
   end
   
-  def next_station
-    @index += 1
-    @current_station = @route.stations[@index]
-    p "Current station is #{@current_station}"
+  def send_to_next_station
+    i = @route.index(@current_station)
+
+    if @route[i + 1]
+      @current_station = @route[i + 1]
+      p "Current station is #{@current_station}"
+    else
+      p "This is a last station in the route"
+    end
   end
   
-  def prev_station
-    @index -= 1
-    @current_station = @route.stations[@index]
-    p "Current station is #{@current_station}"
+  def send_to_prev_station
+    i = @route.index(@current_station)
+    
+    if @route[i - 1]
+      @current_station = @route[i - 1]
+      p "Current station is #{@current_station}"
+    else
+      p "This is a last station in the route"
+    end
   end
   
-  def prev_curr_next
-    p "current: #{@route[@index]}"
-    p "previous: #{route.stations[@index - 1]}"
-    p "next: #{route.stations[@index + 1]}"
+  def near_stations
+    i = @route.index(@current_station)
+    p "current: #{@route[i]}"
+    p "previous: #{route[i - 1]}"
+    p "next: #{route[@index + 1]}"
   end
 end
