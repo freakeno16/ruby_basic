@@ -1,17 +1,15 @@
 class Train
-  attr_reader :name, :number, :type, :wagons, :route 
-  attr_accessor :current_speed, :index
+  attr_reader :name, :number, :wagons, :route 
+  attr_accessor :current_speed
 
   TRAIN_TYPES = [
     PASSENGER = "passenger",
     FREIGHT = "freight"
   ].freeze
   
-  def initialize(name, number, type)
-    raise StandardError("undefined train type") unless TRAIN_TYPES.include?(type)
+  def initialize(name, number)
     @name = name
     @number = number
-    @type = type
     @wagons = []
     @current_speed = 0 
   end
@@ -22,12 +20,12 @@ class Train
   end
   
   def stop
-    @current_speed = 0
+    @current_speed == 0
     p "Your current speed: #{@current_speed}"
   end
     
   def add_wagon(wagon)
-    if @current_speed == 0 
+    if @current_speed = 0 
       @wagons << wagon 
     else 
     p "Stop the fckn train, idiot!"
