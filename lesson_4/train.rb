@@ -25,20 +25,11 @@ class Train
   end
     
   def add_wagon(wagon)
-    if @current_speed = 0 
-      @wagons << wagon 
-    else 
-    p "Stop the fckn train, idiot!"
-    end
+    @wagons << wagon if @current_speed = 0 && train_type == wagon.type
   end
   
   def remove_wagon(wagon)
-    if @current_speed == 0 && @wagons.any?
-      @wagons.delete(wagon)
-      p @wagons
-    else  
-      p "Stop the fckn train, idiot!"
-    end
+    @wagons.delete(wagon) if @current_speed = 0 && @wagons.any?
   end
   
   def set_route(route)

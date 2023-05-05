@@ -3,10 +3,12 @@ require_relative 'passenger_train.rb'
 require_relative 'freight_train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
+require_relative 'wagons.rb'
 
-@routes = []
-@trains = []
-@stations = []
+
+@routes = {}
+@trains = {}
+@stations = {}
 
 def handle_user_command
 
@@ -45,9 +47,8 @@ def create_new_station
  
   station_name = gets.chomp
 
-  @stations.push(Station.new station_name)
- 
-  p "Stations: #{@stations.map { |s| s.name }}"
+  @stations[station_name] = Station.new(station_name)
+  p @stations
 end
 
 def create_new_train
@@ -60,21 +61,11 @@ def create_new_train
   p "Enter train type: "
   train_type = gets.chomp
 
-  # if Train::TRAIN_TYPES.include?(train_type)
-  #   t = Object.const_get("#{train_type.capitalize}Train").new(train_name, train_number)
-  #   @trains.push(t)
-  #   p "Trains: #{@trains.map{ |t| t.name } }"
-  # else
-  #  p "Error"
-  # end 
-
   case train_type 
   when PASSENGER
-    @trains.push(PassengerTrain.new(train_name, train_number))
-    p "Trains: #{@trains.map{ |t| t.name } }" 
+    @trains[train_name] = PassengerTrain.new(train_name, train_number)
   when FREIGHT
-    @trains.push(FreightTrain.new(train_name, train_number))
-    p "Trains: #{$trains.map{ |t| t.name } }" 
+    @trains[train_name] = FreightTrain.new(train_name, train_number)
   else
     p "Error!"
   end
@@ -82,7 +73,7 @@ end
 
 def route_menu
   p "Enter 'new' to create new station"
-  p "Enter 'choose' to manage"
+  p "Enter 'manage' to manage"
   route_choice = gets.chomp
 
   case route_choice
@@ -94,38 +85,32 @@ def route_menu
     p "Enter name of last station: "
     last_station = gets.chomp
     
-    Route.new(route_name, first_station, last_station)
-    @routes.push(route_name)
-    p "Routes: #{@routes.map{ |r| r.name } }"
-
-  when "choose"
+    @routes[route_name] = Route.new(route_name, first_station, last_station)
+    p "Routes: #{@routes.values.map { |r| r.name } }"
+  when "manage"
     p "Enter 'add'/'remove' to manage"
-    route_choice = gets.chomp
+    case gets.chomp
+    when "add"
+      p "Enter route name that you want to change: "
+      route_name = gets.chomp
 
-  case route_choice
-  when "add"
-    p "Enter route name that you want to change: "
-    route_name = gets.chomp
+      p "Enter name of station that you want to add: "
+      station_name = gets.chomp
 
-    p "Enter name of station that you want to add: "
-    station_name = gets.chomp
+      p "Where do you want to add station?: "
+      i = gets.to_i
 
-    p "Where do you want to add station?: "
-    index = gets.to_i
+      @routes[route_name].add_station(i, station_name)
+      p @routes
+    when "remove"
+      p "Enter name of route that you want to change: "
+      route_name = gets.chomp
 
-    route_name.add_station(index, station_name)
-    p @routes
-  
-  when "remove"
-    p "Enter name of route that you want to change: "
-    route_name = gets.chomp
+      p "Enter name of station that you want to remove: "
+      station_name = gets.chomp
 
-    p "Enter name of station that you want to remove: "
-    station_name = gets.chomp
-
-    route_name.remove_station(station_name)
-    p route_name
-  
+      @routes[route_name].remove_station(@stations[station_name])
+      p @routes
     else p "Error!"
     end
   end
@@ -138,9 +123,8 @@ def train_set_route
   p "Enter name of route: "
   route_name = gets.chomp
 
-  train_name.set_route(route_name)
-  p @routes
-  p "Your current station is #{route_name.stations[0]}"
+  @trains[train_name].set_route(@routes[route_name])
+  p "Your current station is #{@routes.stations[0]}"
 end
 
 def train_add_wagon
