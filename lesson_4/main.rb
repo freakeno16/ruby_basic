@@ -9,6 +9,7 @@ require_relative 'wagons.rb'
 @routes = {}
 @trains = {}
 @stations = {}
+@wagons = {}
 
 def handle_user_command
 
@@ -131,25 +132,22 @@ def train_add_wagon
   p "Enter train name: "
   train_name = gets.chomp
 
-  p "Enter type of wagon: "
-  wagon_type = gets.chomp
+  p "Enter name of wagon: "
+  wagon_name = gets.chomp
   
-  if wagon_type == train_name.train_type then train_name.add_wagon(wagon_type)
-    p "Wagon was added to #{train_name} train"
-    p train_name
-  else p "Wrong type of wagon!"
-  end
+  @trains[train_name].add_wagon(Wagons.new(@wagons[wagon_name]))
+  p @trains
 end
 
 def train_remove_wagon
   p "Enter train name: "
   train_name = gets.chomp
 
-  p "Enter wagon index: "
-  index = gets.to_i
+  p "Enter wagon name: "
+  wagon_name = gets.chomp
 
-  @train_class_name.remove_wagon(index)
-  p "Wagon was removed from #{train_name} train"
+  @trains[train_name].remove_wagon(wagon_name)
+  p @trains
 end
 
 def train_move
@@ -162,13 +160,13 @@ def train_move
     p "Enter train name: "
     train_name = gets.chomp
 
-    train_name.next_station
+    @trains[train_name].next_station
 
   when "back"
     p "Enter train name: "
     train_name = gets.chomp
 
-    train_name.prev_station
+    @trains[train_name].prev_station
   end
 end
 
@@ -176,12 +174,12 @@ def show_stations_and_trains
   p "Enter route name: "
   route_name = gets.chomp
 
-  route_name.show_stations
+  @routes[route_name].show_stations
 
   p "Enter name of station: "
   station_name = gets.chomp
 
-  p station_name.trains
+  p @stations[station_name].trains
 end
 
 loop do 
