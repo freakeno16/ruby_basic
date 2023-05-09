@@ -6,7 +6,7 @@ class Train
     @name = name
     @number = number
     @wagons = []
-    @current_speed = 0 
+    @current_speed = 0
   end
   
   def speed_up(speed)
@@ -20,11 +20,11 @@ class Train
   end
     
   def add_wagon(wagon)
-    @wagons << wagon if @current_speed = 0 && train_type = wagon.type
+    @wagons << wagon if @current_speed == 0 && train_type = wagon.type
   end
   
   def remove_wagon(wagon)
-    @wagons.delete(wagon) if @current_speed = 0 && @wagons.any?
+    @wagons.delete(wagon) if @current_speed == 0 && @wagons.any?
   end
   
   def set_route(route)
@@ -61,4 +61,3 @@ class Train
     p "next: #{route[@index + 1]}"
   end
 end
-
