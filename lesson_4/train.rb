@@ -1,11 +1,6 @@
 class Train
   attr_reader :name, :number, :wagons, :route 
   attr_accessor :current_speed
-
-  TRAIN_TYPES = [
-    PASSENGER = "passenger",
-    FREIGHT = "freight"
-  ].freeze
   
   def initialize(name, number)
     @name = name
@@ -25,7 +20,7 @@ class Train
   end
     
   def add_wagon(wagon)
-    @wagons << wagon if @current_speed = 0 && train_type == wagon.type
+    @wagons << wagon if @current_speed = 0 && train_type = wagon.type
   end
   
   def remove_wagon(wagon)

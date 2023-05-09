@@ -23,6 +23,9 @@ def handle_user_command
   when "create new train"
     create_new_train
 
+  when "create new wagon"
+    create_new_wagon
+
   when "route menu"
     route_menu
 
@@ -45,11 +48,10 @@ end
 
 def create_new_station
   p "Enter name of new station: "
- 
   station_name = gets.chomp
 
   @stations[station_name] = Station.new(station_name)
-  p @stations
+  p "Stations: #{@stations}"
 end
 
 def create_new_train
@@ -61,16 +63,31 @@ def create_new_train
 
   p "Enter train type: "
   train_type = gets.chomp
+  p @trains.values.map { |t| t.name }
 
-  case train_type 
-  when PASSENGER
+  case train_type
+  when "passenger"
     @trains[train_name] = PassengerTrain.new(train_name, train_number)
-  when FREIGHT
+    p "Trains: #{@trains.values.map { |t| t.name }}"
+  when "freight"
     @trains[train_name] = FreightTrain.new(train_name, train_number)
+    p "Trains: #{@trains.values.map { |t| t.name }}"
+
   else
     p "Error!"
   end
 end
+
+  def create_new_wagon
+    p "Enter wagon name: "
+    wagon_name = gets.chomp
+
+    p "Enter wagon type: "
+    wagon_type = gets.chomp
+
+    @wagons[wagon_name] = Wagons.new(wagon_name, wagon_type)
+    p @wagons
+  end
 
 def route_menu
   p "Enter 'new' to create new station"
@@ -85,6 +102,10 @@ def route_menu
     first_station = gets.chomp
     p "Enter name of last station: "
     last_station = gets.chomp
+
+    @stations[first_station] = Station.new(first_station)
+
+    @stations[last_station] = Station.new(last_station)
     
     @routes[route_name] = Route.new(route_name, first_station, last_station)
     p "Routes: #{@routes.values.map { |r| r.name } }"
@@ -101,16 +122,17 @@ def route_menu
       p "Where do you want to add station?: "
       i = gets.to_i
 
-      @routes[route_name].add_station(i, station_name)
+      @routes[route_name].add_station(i, @stations[station_name].name)
       p @routes
     when "remove"
-      p "Enter name of route that you want to change: "
+      p "Enter name of route that you want to change: " 
+
       route_name = gets.chomp
 
       p "Enter name of station that you want to remove: "
       station_name = gets.chomp
 
-      @routes[route_name].remove_station(@stations[station_name])
+      @routes[route_name].remove_station(@stations[station_name].name)
       p @routes
     else p "Error!"
     end
@@ -125,7 +147,7 @@ def train_set_route
   route_name = gets.chomp
 
   @trains[train_name].set_route(@routes[route_name])
-  p "Your current station is #{@routes.stations[0]}"
+  p "Your current station is #{@routes[route_name].stations.first}"
 end
 
 def train_add_wagon
@@ -135,7 +157,7 @@ def train_add_wagon
   p "Enter name of wagon: "
   wagon_name = gets.chomp
   
-  @trains[train_name].add_wagon(Wagons.new(@wagons[wagon_name]))
+  @trains[train_name].add_wagon(@wagons[wagon_name])
   p @trains
 end
 
