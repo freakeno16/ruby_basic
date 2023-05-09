@@ -41,8 +41,8 @@ def handle_user_command
   when "train move"
     train_move
 
-  when "show stations and trains"
-    show_stations_and_trains
+  when "show near stations"
+    show_near_stations
   end
 end
 
@@ -168,7 +168,7 @@ def train_remove_wagon
   p "Enter wagon name: "
   wagon_name = gets.chomp
 
-  @trains[train_name].remove_wagon(wagon_name)
+  @trains[train_name].remove_wagon(@wagons[wagon_name])
   p @trains
 end
 
@@ -182,17 +182,17 @@ def train_move
     p "Enter train name: "
     train_name = gets.chomp
 
-    @trains[train_name].next_station
+    @trains[train_name].send_to_next_station
 
   when "back"
     p "Enter train name: "
     train_name = gets.chomp
 
-    @trains[train_name].prev_station
+    @trains[train_name].send_to_prev_station
   end
 end
 
-def show_stations_and_trains
+def show_near_stations
   p "Enter route name: "
   route_name = gets.chomp
 
