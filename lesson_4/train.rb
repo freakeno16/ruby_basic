@@ -1,5 +1,5 @@
 class Train
-  attr_reader :name, :number, :wagons, :route 
+  attr_reader :name, :number, :wagons, :route
   attr_accessor :current_speed
   
   def initialize(name, number)
@@ -20,7 +20,7 @@ class Train
   end
     
   def add_wagon(wagon)
-    @wagons << wagon if @current_speed == 0 && train_type = wagon.type
+    @wagons << wagon if @current_speed == 0 && @train_type == wagon.type
   end
   
   def remove_wagon(wagon)
@@ -29,14 +29,16 @@ class Train
   
   def set_route(route)
     @route = route
-    p "Route '#{@route}' has been set"
+    @current_station = route.stations[0]
+    p "Route #{@route} has been set"
+    p "Current_station: #{@current_station}"
   end
   
   def send_to_next_station
-    i = @route.index(@current_station)
+    i = @route.stations.index(@current_station)
 
-    if @route[i + 1]
-      @current_station = @route[i + 1]
+    if @route.stations[i + 1]
+      @current_station = @route.stations[i + 1]
       p "Current station is #{@current_station}"
     else
       p "This is a last station in the route"
@@ -45,12 +47,12 @@ class Train
   
   def send_to_prev_station
     i = @route.index(@current_station)
-    
+
     if @route[i - 1]
       @current_station = @route[i - 1]
       p "Current station is #{@current_station}"
     else
-      p "This is a last station in the route"
+      p "This is a first station in the route"
     end
   end
   
@@ -58,6 +60,6 @@ class Train
     i = @route.index(@current_station)
     p "current: #{@route[i]}"
     p "previous: #{route[i - 1]}"
-    p "next: #{route[@index + 1]}"
+    p "next: #{route[i + 1]}"
   end
 end

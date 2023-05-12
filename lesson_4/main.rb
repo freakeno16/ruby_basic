@@ -5,7 +5,6 @@ require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'wagons.rb'
 
-
 @routes = {}
 @trains = {}
 @stations = {}
@@ -52,6 +51,7 @@ def create_new_station
 
   @stations[station_name] = Station.new(station_name)
   p "Stations: #{@stations.values.map{ |s| p s.name }}"
+  p @stations[station_name]
 end
 
 def create_new_train
@@ -68,10 +68,11 @@ def create_new_train
   when "passenger"
     @trains[train_name] = PassengerTrain.new(train_name, train_number)
     p "Trains: #{@trains.values.map { |t| t.name }}"
+    p @trains[train_name]
+
   when "freight"
     @trains[train_name] = FreightTrain.new(train_name, train_number)
     p "Trains: #{@trains.values.map { |t| t.name }}"
-
   else
     p "Error!"
   end
@@ -149,8 +150,6 @@ def train_set_route
   route_name = gets.chomp
 
   @trains[train_name].set_route(@routes[route_name])
-  p "Your current station is #{@routes[route_name].stations.first}"
-  p @trains[train_name]
 end
 
 def train_add_wagon
