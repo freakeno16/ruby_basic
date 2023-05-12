@@ -30,36 +30,40 @@ class Train
   def set_route(route)
     @route = route
     @current_station = route.stations[0]
-    p "Route #{@route} has been set"
-    p "Current_station: #{@current_station}"
+    p "Route #{@route.name} has been set"
+    p "Current station: #{@current_station.name}"
   end
   
   def send_to_next_station
     i = @route.stations.index(@current_station)
 
-    if @route.stations[i + 1]
-      @current_station = @route.stations[i + 1]
-      p "Current station is #{@current_station}"
+    if(s = @route.stations[i + 1]) 
+      @current_station = s
+      @route.stations[i].send_train(self)
+      s.add_train(self)
+      p "Current station is #{@current_station.name}"
     else
       p "This is a last station in the route"
     end
   end
   
   def send_to_prev_station
-    i = @route.index(@current_station)
+    i = @route.stations.index(@current_station)
 
-    if @route[i - 1]
-      @current_station = @route[i - 1]
-      p "Current station is #{@current_station}"
+    if(s = @route.stations[i - 1]) 
+      @current_station = s
+      @route.stations[i].send_train(self)
+      s.add_train(self)
+      p "Current station is #{@current_station.name}"
     else
       p "This is a first station in the route"
     end
   end
   
   def near_stations
-    i = @route.index(@current_station)
-    p "current: #{@route[i]}"
-    p "previous: #{route[i - 1]}"
-    p "next: #{route[i + 1]}"
+    i = @route.stations.index(@current_station)
+    p "current: #{@route.stations[i]&.name}"
+    p "previous: #{@route.stations[i - 1]&.name}"
+    p "next: #{@route.stations[i + 1]&.name}"
   end
 end

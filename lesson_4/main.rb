@@ -51,7 +51,6 @@ def create_new_station
 
   @stations[station_name] = Station.new(station_name)
   p "Stations: #{@stations.values.map{ |s| p s.name }}"
-  p @stations[station_name]
 end
 
 def create_new_train
@@ -68,8 +67,6 @@ def create_new_train
   when "passenger"
     @trains[train_name] = PassengerTrain.new(train_name, train_number)
     p "Trains: #{@trains.values.map { |t| t.name }}"
-    p @trains[train_name]
-
   when "freight"
     @trains[train_name] = FreightTrain.new(train_name, train_number)
     p "Trains: #{@trains.values.map { |t| t.name }}"
@@ -78,16 +75,16 @@ def create_new_train
   end
 end
 
-  def create_new_wagon
-    p "Enter wagon name: "
-    wagon_name = gets.chomp
+def create_new_wagon
+  p "Enter wagon name: "
+  wagon_name = gets.chomp
 
-    p "Enter wagon type: "
-    wagon_type = gets.chomp
+  p "Enter wagon type: "
+  wagon_type = gets.chomp
 
-    @wagons[wagon_name] = Wagons.new(wagon_name, wagon_type)
-    p @wagons
-  end
+  @wagons[wagon_name] = Wagons.new(wagon_name, wagon_type)
+  p @wagons
+end
 
 def route_menu
   p "Enter 'new' to create new station"
@@ -107,37 +104,36 @@ def route_menu
 
     @stations[last_station] = Station.new(last_station)
     
-    @routes[route_name] = Route.new(route_name, first_station, last_station)
+    @routes[route_name] = Route.new(route_name, @stations[first_station], @stations[last_station])
     p "Routes: #{@routes.values.map { |r| r.name } }"
   when "manage"
     p "Enter 'add'/'remove' to manage"
 
-  case gets.chomp
+    case gets.chomp
+    when "add"
+      p "Enter route name that you want to change: "
+      route_name = gets.chomp
 
-  when "add"
-    p "Enter route name that you want to change: "
-    route_name = gets.chomp
+      p "Enter name of station that you want to add: "
+      station_name = gets.chomp
 
-    p "Enter name of station that you want to add: "
-    station_name = gets.chomp
+      p "Where do you want to add station?: "
+      i = gets.to_i
 
-    p "Where do you want to add station?: "
-    i = gets.to_i
+      @routes[route_name].add_station(i, @stations[station_name].name)
+      p @routes
+    when "remove"
+      p "Enter name of route that you want to change: " 
 
-    @routes[route_name].add_station(i, @stations[station_name].name)
-    p @routes
+      route_name = gets.chomp
 
-  when "remove"
-    p "Enter name of route that you want to change: " 
+      p "Enter name of station that you want to remove: "
+      station_name = gets.chomp
 
-    route_name = gets.chomp
-
-    p "Enter name of station that you want to remove: "
-    station_name = gets.chomp
-
-    @routes[route_name].remove_station(@stations[station_name].name)
-    p @routes
-    else p "Error!"
+      @routes[route_name].remove_station(@stations[station_name].name)
+      p @routes
+    else
+      p "Error!"
     end
   end
 end
@@ -178,27 +174,22 @@ def train_move
   p "Where do you want to move (forward/back)?"
   train_move = gets.chomp
 
+  p "Enter train name: "
+  train_name = gets.chomp
+
   case train_move
-  
   when "forward"
-    p "Enter train name: "
-    train_name = gets.chomp
-
     @trains[train_name].send_to_next_station
-
   when "back"
-    p "Enter train name: "
-    train_name = gets.chomp
-
     @trains[train_name].send_to_prev_station
   end
 end
 
 def show_near_stations
-  p "Enter route name: "
-  route_name = gets.chomp
+  p "Enter train name: "
+  train_name = gets.chomp
 
-  @routes[route_name].near_stations
+  @trains[train_name].near_stations
 
   p "Enter name of station: "
   station_name = gets.chomp

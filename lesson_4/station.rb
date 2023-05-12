@@ -11,7 +11,6 @@ class Station
   end
 
   def send_train(train)
-    train.send_to_next_station
     @trains.delete(train)
   end
 
