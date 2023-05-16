@@ -5,11 +5,6 @@ require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'wagons.rb'
 
-@routes = {}
-@trains = {}
-@stations = {}
-@wagons = {}
-
 def handle_user_command
 
   command = gets.chomp
@@ -49,7 +44,7 @@ def create_new_station
   p "Enter name of new station: "
   station_name = gets.chomp
 
-  @stations[station_name] = Station.new(station_name)
+  Station.add_station(Station.new(station_name))
   p "Stations: #{@stations.values.map{ |s| p s.name }}"
 end
 
@@ -65,10 +60,10 @@ def create_new_train
 
   case train_type
   when "passenger"
-    @trains[train_name] = PassengerTrain.new(train_name, train_number)
+    Train.add_train(Train.new(train_name, train_number, train_type))
     p "Trains: #{@trains.values.map { |t| t.name }}"
   when "freight"
-    @trains[train_name] = FreightTrain.new(train_name, train_number)
+    Train.add_train(Train.new(train_name, train_number, train_type))
     p "Trains: #{@trains.values.map { |t| t.name }}"
   else
     p "Error!"
@@ -82,8 +77,8 @@ def create_new_wagon
   p "Enter wagon type: "
   wagon_type = gets.chomp
 
-  @wagons[wagon_name] = Wagons.new(wagon_name, wagon_type)
-  p @wagons
+  Wagon.add_wagon(Wagon.new(wagon_name, wagon_type))
+  p "Wagons: #{@wagons.value.map { |w| p w.name }}"
 end
 
 def route_menu
@@ -104,7 +99,7 @@ def route_menu
 
     @stations[last_station] = Station.new(last_station)
     
-    @routes[route_name] = Route.new(route_name, @stations[first_station], @stations[last_station])
+    @routes.add_route(Route.new(route_name, first_station, last_station))
     p "Routes: #{@routes.values.map { |r| r.name } }"
   when "manage"
     p "Enter 'add'/'remove' to manage"

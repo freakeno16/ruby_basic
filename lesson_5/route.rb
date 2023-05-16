@@ -1,5 +1,16 @@
 class Route
+  @routes = {}
+
   attr_reader :stations, :name
+
+  def self.all_routes
+    @routes
+  end
+
+  def self.add_route(route)
+    @routes[route.name] = route
+  end
+
   def initialize(name, starting, ending)
     @name = name
     @stations = [starting, ending]

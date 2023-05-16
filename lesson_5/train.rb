@@ -1,7 +1,22 @@
 class Train
+  @trains = {}
+
+  include CompanyName
+
   attr_reader :name, :number, :wagons, :route
   attr_accessor :current_speed
-  include CompanyName
+
+  def self.all_trains
+    @trains
+  end
+
+  def self.add_train(train)
+    @trains[train.name] = train
+  end
+
+  def self.find(number)
+    @trains.select { |t| p t.number }
+  end
   
   def initialize(name, number)
     @name = name
