@@ -3,7 +3,7 @@ require_relative 'passenger_train.rb'
 require_relative 'freight_train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
-require_relative 'wagons.rb'
+require_relative 'wagon.rb'
 
 @routes = {}
 @trains = {}
@@ -82,7 +82,7 @@ def create_new_wagon
   p "Enter wagon type: "
   wagon_type = gets.chomp
 
-  @wagons[wagon_name] = Wagons.new(wagon_name, wagon_type)
+  @wagons[wagon_name] = Wagon.new(wagon_name, wagon_type)
   p @wagons
 end
 
@@ -120,7 +120,7 @@ def route_menu
       p "Where do you want to add station?: "
       i = gets.to_i
 
-      @routes[route_name].add_station(i, @stations[station_name].name)
+      @routes[route_name].add_station(i, @stations[station_name])
       p @routes
     when "remove"
       p "Enter name of route that you want to change: " 
@@ -130,7 +130,7 @@ def route_menu
       p "Enter name of station that you want to remove: "
       station_name = gets.chomp
 
-      @routes[route_name].remove_station(@stations[station_name].name)
+      @routes[route_name].remove_station(@stations[station_name])
       p @routes
     else
       p "Error!"
