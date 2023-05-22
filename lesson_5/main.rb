@@ -3,7 +3,7 @@ require_relative 'passenger_train.rb'
 require_relative 'freight_train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
-require_relative 'wagons.rb'
+require_relative 'wagon.rb'
 
 def handle_user_command
 
@@ -78,7 +78,7 @@ def create_new_wagon
   wagon_type = gets.chomp
 
   Wagon.add_wagon(Wagon.new(wagon_name, wagon_type))
-  p "Wagons: #{@wagons.value.map { |w| p w.name }}"
+  p "Wagons: #{@wagons.values.map { |w| p w.name }}"
 end
 
 def route_menu

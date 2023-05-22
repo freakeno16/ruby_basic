@@ -1,4 +1,4 @@
-class Wagons
+class Wagon
   @wagons = {}
 
   include CompanyName
