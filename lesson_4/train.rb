@@ -15,7 +15,7 @@ class Train
   end
   
   def stop
-    @current_speed = 0
+    @current_speed == 0
     p "Your current speed: #{@current_speed}"
   end
     
@@ -24,7 +24,11 @@ class Train
   end
   
   def remove_wagon(wagon)
-    @wagons.delete(wagon) if @current_speed == 0 && @wagons.include?
+    if @current_speed == 0 && @wagons.include?(wagon)
+      @wagons.delete(wagon)
+    else
+      p "There's no wagons to remove!"
+    end
   end
   
   def set_route(route)
