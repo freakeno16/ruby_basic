@@ -31,7 +31,7 @@ class Train
   end
   
   def stop
-    @current_speed == 0
+    @current_speed = 0
     p "Your current speed: #{@current_speed}"
   end
     
