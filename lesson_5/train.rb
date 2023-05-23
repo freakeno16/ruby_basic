@@ -2,6 +2,7 @@ class Train
   @trains = {}
 
   include CompanyName
+  include InstanceCounter
 
   attr_reader :name, :number, :wagons, :route
   attr_accessor :current_speed
@@ -23,6 +24,7 @@ class Train
     @number = number
     @wagons = []
     @current_speed = 0
+    @@instances += 1
   end
   
   def speed_up(speed)
