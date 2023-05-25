@@ -18,7 +18,7 @@ module InstanceCounter
     private
 
     def register_instance
-
+      @@instances += 1
     end
   end
 end

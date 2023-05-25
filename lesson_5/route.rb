@@ -1,6 +1,8 @@
 class Route
   @routes = {}
 
+  include InstanceCounter
+
   attr_reader :stations, :name
 
   def self.all_routes

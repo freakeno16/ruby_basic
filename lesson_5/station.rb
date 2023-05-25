@@ -1,5 +1,7 @@
 class Station 
   @stations = {}
+  
+  include InstanceCounter
 
   attr_reader :trains, :name
 

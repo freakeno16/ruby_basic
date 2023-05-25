@@ -24,7 +24,7 @@ class Train
     @number = number
     @wagons = []
     @current_speed = 0
-    @@instances += 1
+    @register_instance
   end
   
   def speed_up(speed)
