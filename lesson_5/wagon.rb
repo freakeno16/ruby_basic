@@ -5,12 +5,14 @@ class Wagon
 
   attr_reader :name, :type
 
-  def self.all_wagons
-    @wagons
-  end
-
-  def self.add_wagon(wagon)
-    @wagons[wagon.name] = wagon
+  class << self 
+    def all_routes
+      @routes
+    end
+  
+    def add_route(route)
+      @routes[route.name] = route
+    end
   end
   
   def initialize(name, type)

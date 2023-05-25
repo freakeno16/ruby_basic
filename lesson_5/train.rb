@@ -1,3 +1,6 @@
+require_relative 'company_name.rb'
+require_relative 'instance_counter.rb'
+
 class Train
   @trains = {}
 
@@ -7,16 +10,18 @@ class Train
   attr_reader :name, :number, :wagons, :route
   attr_accessor :current_speed
 
-  def self.all_trains
-    @trains
-  end
-
-  def self.add_train(train)
-    @trains[train.name] = train
-  end
-
-  def self.find(number)
-    @trains.select { |t| p t.number }
+  class << self
+    def all_trains
+      @trains
+    end
+  
+    def add_train(train)
+      @trains[train.name] = train
+    end
+  
+    def find(number)
+      @trains.each { |t| p t.number }
+    end
   end
   
   def initialize(name, number)

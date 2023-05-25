@@ -5,12 +5,14 @@ class Route
 
   attr_reader :stations, :name
 
-  def self.all_routes
-    @routes
-  end
-
-  def self.add_route(route)
-    @routes[route.name] = route
+  class << self
+    def all_routes
+      @routes
+    end
+  
+    def add_route(route)
+      @routes[route.name] = route
+    end
   end
 
   def initialize(name, starting, ending)
