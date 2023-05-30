@@ -1,72 +1,80 @@
 class Train
-  attr_reader :number, :type, :wagons, :route
-  attr_accessor :current_speed
+  attr_reader :name, :number, :type, :wagons, :route 
+  attr_accessor :current_speed, :index
 
-  def initialize(number, type, wagons)
+  TRAIN_TYPES = [
+    PASSENGER = "passenger",
+    FREIGHT = "freight"
+  ].freeze
+  
+  def initialize(name, number, type)
+    raise StandardError("undefined train type") unless TRAIN_TYPES.include?(type)
+    @name = name
     @number = number
     @type = type
-    @wagons = wagons
+    @wagons = []
     @current_speed = 0 
-    @index = 0
   end
-
+  
   def speed_up(speed)
     @current_speed += speed
     p "Your current speed: #{@current_speed}"
   end
-
+  
   def stop
-    @current_speed == 0
+    @current_speed = 0
     p "Your current speed: #{@current_speed}"
   end
-  
-  def add_wagon
-    if @current_speed == 0
-      @wagons += 1
+    
+  def add_wagon(wagon)
+    if @current_speed == 0 
+      @wagons << wagon 
     else 
-      p "Stop the fckn train, idiot!"
+    p "Stop the fckn train, idiot!"
     end
   end
-
-  def remove_wagon
-    if @current_speed == 0 && wagons > 0
-      @wagons -= 1
+  
+  def remove_wagon(wagon)
+    if @current_speed == 0 && @wagons.any?
+      @wagons.delete(wagon)
+      p @wagons
     else  
       p "Stop the fckn train, idiot!"
     end
   end
-
+  
   def set_route(route)
     @route = route
-    @current_station = @route[0]
-    p "Your current station is #{@current_station}"
+    p "Route '#{@route}' has been set"
   end
+  
+  def send_to_next_station
+    i = @route.index(@current_station)
 
-  def next_station
-    @index += 1
-    @current_station = @route[@index]
-    p "Current station is #{@current_station}"
+    if @route[i + 1]
+      @current_station = @route[i + 1]
+      p "Current station is #{@current_station}"
+    else
+      p "This is a last station in the route"
+    end
   end
-
-  def prev_station
-    @index -= 1
-    @current_station = @route[@index]
-    p "Current station is #{@current_station}"
+  
+  def send_to_prev_station
+    i = @route.index(@current_station)
+    
+    if @route[i - 1]
+      @current_station = @route[i - 1]
+      p "Current station is #{@current_station}"
+    else
+      p "This is a last station in the route"
+    end
   end
-
-  def prev_curr_next
-    p "current: #{@route[@index]}"
-    p "previous: #{route[@index - 1]}"
+  
+  def near_stations
+    i = @route.index(@current_station)
+    p "current: #{@route[i]}"
+    p "previous: #{route[i - 1]}"
     p "next: #{route[@index + 1]}"
   end
 end
 
-train = Train.new(1488, "passenger", 8)
-
-train.set_route(["Zavodskaya", "Vikulova", "Kraulya", "Radik"])
-p train.route
-train.next_station
-train.prev_curr_next
-p train
-
-train.remove_wagon

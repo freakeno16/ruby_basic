@@ -1,5 +1,19 @@
 class Station 
+  @stations = {}
+  
+  include InstanceCounter
+
   attr_reader :trains, :name
+
+  class << self
+    def all_routes
+      @routes
+    end
+  
+    def add_route(route)
+      @routes[route.name] = route
+    end
+  end
 
   def initialize(name)
     @name = name
