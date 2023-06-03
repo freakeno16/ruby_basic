@@ -1,3 +1,5 @@
+require_relative 'company_name.rb'
+
 class Wagon
   @wagons = {}
 
