@@ -1,13 +1,12 @@
 require_relative 'company_name.rb'
-# require_relative 'instance_counter.rb'
+require_relative 'instance_counter.rb'
 
 class Train
-  @trains = {}
 
-  NUMBER_FORMAT = /^[0-9a-z]{3}-?[0-9a-z]{2}$/i
+  NUMBER_FORMAT = /^[0-9a-z]{3}-*[0-9a-z]{2}$/i
 
   include CompanyName
-  # include InstanceCounter
+  include InstanceCounter
 
   attr_reader :name, :number, :wagons, :route
   attr_accessor :current_speed
@@ -18,7 +17,7 @@ class Train
     end
   
     def add_train(train)
-      @trains[train.name] = train
+      @instances[train.name] = train
     end
   
     def find(number)
@@ -31,7 +30,7 @@ class Train
     @number = number
     @wagons = []
     @current_speed = 0
-    # register_instance
+    register_instance
     validate!
   end
   
