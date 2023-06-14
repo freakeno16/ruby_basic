@@ -45,7 +45,7 @@ def create_new_station
   station_name = gets.chomp
 
   Station.add_station(Station.new(station_name))
-  p "Stations: #{@stations.values.map{ |s| p s.name }}"
+  p @stations
 end
 
 def create_new_train
@@ -60,10 +60,10 @@ def create_new_train
 
   case train_type
   when "passenger"
-    Train.add_train(Train.new(train_name, train_number, train_type))
+    Train.add_train(PassengerTrain.new(train_name, train_number))
     p "Trains: #{@trains.values.map { |t| t.name }}"
   when "freight"
-    Train.add_train(Train.new(train_name, train_number, train_type))
+    Train.add_train(FreightTrain.new(train_name, train_number))
     p "Trains: #{@trains.values.map { |t| t.name }}"
   else
     p "Error!"

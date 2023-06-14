@@ -11,7 +11,7 @@ class Train
   attr_accessor :current_speed
 
   class << self
-    def all_trains
+    def all
       @trains
     end
   

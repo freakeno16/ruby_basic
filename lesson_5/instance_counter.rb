@@ -1,7 +1,5 @@
 module InstanceCounter
 
-  @@instances = 0
-
   def self.included(base) #self для того, чтобы included был методом данного модуля, а не класса, в который я его включу
     base.extend ClassMethods
     base.include InstanceMethods #send похуй проебали
@@ -9,7 +7,12 @@ module InstanceCounter
 
   module ClassMethods
     def instances
-      @@instances
+      @@instances ||= 0
+    end
+
+    def add_instance
+      @instances ||= 0
+      @instances += 1
     end
   end
 
@@ -18,7 +21,7 @@ module InstanceCounter
     private
 
     def register_instance
-      @@instances += 1
+      self.class.add_instance
     end
   end
 end

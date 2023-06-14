@@ -8,12 +8,12 @@ class Wagon
   attr_reader :name, :type
 
   class << self 
-    def all_routes
-      @routes
+    def all
+      @wagons
     end
   
-    def add_route(route)
-      @routes[route.name] = route
+    def add_wagon(wagon)
+      @wagons[wagon.name] = wagon
     end
   end
   

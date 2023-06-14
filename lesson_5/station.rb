@@ -1,17 +1,19 @@
+# require_relative 'instance_counter'
+
 class Station 
   @stations = {}
   
-  include InstanceCounter
+  # include InstanceCounter
 
   attr_reader :trains, :name
 
   class << self
-    def all_routes
-      @routes
+    def all
+      @stations
     end
   
-    def add_route(route)
-      @routes[route.name] = route
+    def add_station(station)
+      @stations[station.name] = station
     end
   end
 
