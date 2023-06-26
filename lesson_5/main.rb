@@ -103,6 +103,7 @@ def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last
     p Route.all
   when "manage"
     p "Enter 'add'/'remove' to manage"
+
     manage_option = manage_option || gets.chomp
 
     case manage_option
