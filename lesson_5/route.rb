@@ -1,3 +1,5 @@
+require_relative 'instance_counter'
+
 class Route
   @routes = {}
 
@@ -6,7 +8,7 @@ class Route
   attr_reader :stations, :name
 
   class << self
-    def all_routes
+    def all
       @routes
     end
   
@@ -18,17 +20,18 @@ class Route
   def initialize(name, starting, ending)
     @name = name
     @stations = [starting, ending]
+    register_instance
   end
 
   def show_stations
-    @stations.each { |s| p s }
+    stations.each { |s| p s }
   end
 
-  def add_station(index, station)
-    @stations.insert(index, station)
+  def add_station(index, station) 
+    stations.insert(index, station)
   end
     
   def remove_station(station)
-    @stations.delete(station)
+    stations.delete(station)
   end
 end

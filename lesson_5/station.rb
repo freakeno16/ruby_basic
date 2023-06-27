@@ -1,3 +1,5 @@
+require_relative 'instance_counter'
+
 class Station 
   @stations = {}
   
@@ -6,18 +8,19 @@ class Station
   attr_reader :trains, :name
 
   class << self
-    def all_routes
-      @routes
+    def all
+      @stations
     end
   
-    def add_route(route)
-      @routes[route.name] = route
+    def add_station(station)
+      @stations[station.name] = station
     end
   end
 
   def initialize(name)
     @name = name
     @trains = []
+    register_instance
   end
   
   def add_train(train)

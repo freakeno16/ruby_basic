@@ -11,7 +11,7 @@ class Train
   attr_accessor :current_speed
 
   class << self
-    def all_trains
+    def all
       @trains
     end
   
@@ -29,9 +29,9 @@ class Train
     @number = number
     @wagons = []
     @current_speed = 0
-    register_instance
+    self.class.register_instance
   end
-  
+    
   def speed_up(speed)
     @current_speed += speed
     p "Your current speed: #{@current_speed}"
