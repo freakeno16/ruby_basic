@@ -1,23 +1,27 @@
 require_relative 'company_name.rb'
 require_relative 'instance_counter.rb'
+require_relative 'validate.rb'
 
 class Train
 
-  NUMBER_FORMAT = /^[0-9a-z]{3}-*[0-9a-z]{2}$/i
+  NUMBER_FORMAT = /^[a-z\d]{3}-*[a-z\d]{2}$/
+  
+  @trains = {}
 
   include CompanyName
   include InstanceCounter
+  include Validate
 
   attr_reader :name, :number, :wagons, :route
   attr_accessor :current_speed
 
   class << self
-    def all_trains
+    def all
       @trains
     end
   
     def add_train(train)
-      @instances[train.name] = train
+      @trains[train.name] = train
     end
   
     def find(number)
@@ -27,25 +31,11 @@ class Train
   
   def initialize(name, number)
     @name = name
-    @number = number
+    @number = number.to_s
     @wagons = []
     @current_speed = 0
-    register_instance
+    self.class.register_instance
     validate!
-  end
-  
-  def validate!
-    raise "Name can't be nil!" if name.nil?
-    raise "Number can't be nil!" if number.nil?
-    raise "Number must contain 4 numbers" if number.length < 4
-    raise "Wrong number format!" if number !~ NUMBER_FORMAT
-  end
-
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false
   end
 
   def speed_up(speed)
@@ -108,5 +98,14 @@ class Train
     p "current: #{@route.stations[i]&.name}"
     p "previous: #{@route.stations[i - 1]&.name}"
     p "next: #{@route.stations[i + 1]&.name}"
+  end
+
+  protected
+  
+  def validate!
+    raise "Name can't be nil!" if name.nil?
+    raise "Number can't be nil!" if number.nil?
+    raise "Number must be at least 5 symbols!" if number.length < 5
+    raise "Wrong number format!" if number !~ NUMBER_FORMAT
   end
 end

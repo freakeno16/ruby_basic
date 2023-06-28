@@ -1,14 +1,24 @@
-require_relative 'instance_counter'
-require_relative 'validate.rb'
+# def connect
+#   raise "Error, retry pls"
+# end
 
+# try = 0
+# begin   
+#   connect 
+# rescue RuntimeError
+#   try += 1
+#   p "Check your connection!"
+#   retry if try < 3
+# ensure 
+#   p "There was #{try} tryes"
+
+# end
 
 class Station 
   @stations = {}
-  
-  include InstanceCounter
-  include Validate
 
   attr_reader :trains, :name
+  attr_writer :name
 
   class << self
     def all
@@ -20,10 +30,16 @@ class Station
     end
   end
 
+  def valid?
+    validate!
+  rescue
+    false
+  end
+
+
   def initialize(name)
     @name = name
     @trains = []
-    register_instance
     validate!
   end
   
@@ -39,9 +55,11 @@ class Station
     @trains.select { |t| t.type == type }
   end
 
-  protected
+  protected 
 
   def validate!
-    raise "Name can't be nil!" if name.nil?
+    raise "Name lenght must be at least 3 symbols!" if name.length < 3
+    p "Good!"
+    true
   end
 end
