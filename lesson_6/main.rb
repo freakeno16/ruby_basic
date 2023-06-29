@@ -58,8 +58,6 @@ def create_new_train
   p "Enter train type: "
   train_type = gets.chomp
 
-  try = 0
-
   begin
   case train_type
   when "passenger"
