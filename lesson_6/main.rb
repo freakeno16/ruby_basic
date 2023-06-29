@@ -58,13 +58,24 @@ def create_new_train
   p "Enter train type: "
   train_type = gets.chomp
 
+  try = 0
+
+  begin
   case train_type
   when "passenger"
     Train.add_train(PassengerTrain.new(train_name, train_number))
+    p "Passenger train was created:" if Train.add_train(PassengerTrain.new(train_name, train_number)).valid?
     p Train.all
+
   when "freight"
     Train.add_train(FreightTrain.new(train_name, train_number))
+    p "Freight train was created:" if Train.add_train(FreightTrain.new(train_name, train_number)).valid?
     p Train.all
+  end
+
+  rescue RuntimeError => e
+    try += 1
+    p "Error: #{e.message}, retry please"
   end
 end
 

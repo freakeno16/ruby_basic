@@ -29,6 +29,6 @@ class Wagon
 
   def validate!
     raise "Name can't be nil!" if name.nil?
-    raise "Wrong wagon type!" if type != "passenger"
+    raise "Wrong wagon type!" if type != "passenger" && type != "freight"
   end
 end

@@ -43,5 +43,6 @@ class Route
 
   def validate!
     raise "Name can't be nil!" if name.nil?
+    raise "Stations can't be nil" if stations.nil?
   end
 end
