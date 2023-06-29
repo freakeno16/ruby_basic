@@ -74,7 +74,6 @@ def create_new_train
   end
 
   rescue RuntimeError => e
-    try += 1
     p "Error: #{e.message}, retry please"
   end
 end
