@@ -62,12 +62,12 @@ def create_new_train
   case train_type
   when "passenger"
     Train.add_train(PassengerTrain.new(train_name, train_number))
-    p "Passenger train was created:" if Train.add_train(PassengerTrain.new(train_name, train_number)).valid?
+    p "Passenger train was created: #{PassengerTrain.new(train_name, train_number)}"
     p Train.all
 
   when "freight"
     Train.add_train(FreightTrain.new(train_name, train_number))
-    p "Freight train was created:" if Train.add_train(FreightTrain.new(train_name, train_number)).valid?
+    p "Freight train was created: #{FreightTrain.new(train_name, train_number)}"
     p Train.all
   end
 
