@@ -31,7 +31,7 @@ class Train
   
   def initialize(name, number)
     @name = name
-    @number = number.to_s
+    @number = number
     @wagons = []
     @current_speed = 0
     self.class.register_instance

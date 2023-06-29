@@ -62,17 +62,18 @@ def create_new_train
   case train_type
   when "passenger"
     Train.add_train(PassengerTrain.new(train_name, train_number))
-    p "Passenger train was created: #{PassengerTrain.new(train_name, train_number)}"
+    p "Passenger train was created"
     p Train.all
 
   when "freight"
     Train.add_train(FreightTrain.new(train_name, train_number))
-    p "Freight train was created: #{FreightTrain.new(train_name, train_number)}"
+    p "Freight train was created"
     p Train.all
   end
 
   rescue RuntimeError => e
     p "Error: #{e.message}, retry please"
+    create_new_train
   end
 end
 

@@ -22,6 +22,7 @@ class Wagon
   def initialize(name, type)
     @name = name
     @type = type
+    self.class.register_instance
     validate!
   end
 
