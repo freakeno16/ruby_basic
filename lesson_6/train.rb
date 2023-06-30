@@ -25,7 +25,7 @@ class Train
     end
   
     def find(number)
-      @trains.each { |t| p t.number }
+      @trains.values.find { |t| t.number == number }
     end
   end
   
