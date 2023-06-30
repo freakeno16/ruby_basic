@@ -20,7 +20,7 @@ class Train
     end
   
     def find(number)
-      @trains.each { |t| p t.number }
+      @trains.values.find { |t| t.number == number }
     end
   end
   
@@ -94,3 +94,6 @@ class Train
     p "next: #{@route.stations[i + 1]&.name}"
   end
 end
+
+Train.add_train(Train.new("t1", "1488"))
+Train.add_train(Train.new("t2", "1337"))
