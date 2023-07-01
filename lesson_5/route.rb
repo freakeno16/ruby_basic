@@ -20,7 +20,7 @@ class Route
   def initialize(name, starting, ending)
     @name = name
     @stations = [starting, ending]
-    register_instance
+    self.class.register_instance
   end
 
   def show_stations
