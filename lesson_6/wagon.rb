@@ -1,11 +1,13 @@
 require_relative 'company_name.rb'
 require_relative 'validate.rb'
+require_relative 'instance_counter.rb'
 
 class Wagon
   @wagons = {}
 
   include CompanyName
   include Validate
+  include InstanceCounter
 
   attr_reader :name, :type
 
