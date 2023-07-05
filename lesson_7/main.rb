@@ -4,6 +4,8 @@ require_relative 'freight_train.rb'
 require_relative 'station.rb'
 require_relative 'route.rb'
 require_relative 'wagon.rb'
+require_relative 'passenger_wagon.rb'
+require_relative 'freight_wagon.rb'
 
 def handle_user_command
 
@@ -19,6 +21,9 @@ def handle_user_command
 
   when "create new wagon"
     create_new_wagon
+
+  when "wagon menu"
+    wagon_menu
 
   when "route menu"
     route_menu
@@ -78,14 +83,79 @@ def create_new_train
 end
 
 def create_new_wagon
-  p "Enter wagon name: "
+  p "Enter wagon name:"
   wagon_name = gets.chomp
 
   p "Enter wagon type: "
   wagon_type = gets.chomp
 
-  Wagon.add_wagon(Wagon.new(wagon_name, wagon_type))
-  p Wagon.all
+
+  case wagon_type
+  when "passenger"
+    p "How much places?:"
+    wagon_places = gets.to_i
+
+    Wagon.add_wagon(PassengerWagon.new(wagon_name, wagon_places))
+    p Wagon.all
+
+  when "freight"
+    p "How many capacity?:"
+    wagon_capacity = gets.to_i
+
+    Wagon.add_wagon(FreightWagon.new(wagon_name, wagon_capacity))
+    p Wagon.all
+  end
+end
+
+def wagon_menu
+  p "Enter wagon type:"
+  wagon_type = gets.chomp
+  p "Enter wagon name:"
+  wagon_name = gets.chomp
+
+  case wagon_type
+  when "passenger"
+    p "Passenger wagon menu: 'show places', 'take place', 'show taked places', 'show free places'"
+    p "Enter your choice:"
+    passenger_wagon_choice = gets.chomp
+
+    case passenger_wagon_choice
+    when "show places"
+      p Wagon.all[wagon_name].places
+
+    when "take place"
+      p "The place was taken"
+      p Wagon.all[wagon_name].take_place
+    
+    when "show taked places"
+      p Wagon.all[wagon_name].taked_places
+    
+    when "show free places"
+      p Wagon.all[wagon_name].free_places
+    end
+    
+  when "freight"
+    p "Freight wagon menu: 'show capacity', 'take capacity', 'show taked capacity', 'show free capacity'"
+    p "Enter your choice:"
+    freight_wagon_choice = gets.chomp
+
+    case freight_wagon_choice  
+    when "show capacity"
+      p Wagon.all[wagon_name].capacity
+  
+    when "take capacity"
+      p "How much capacity do you want to take?:"
+      capacity = gets.to_i
+      p "The capacity were taken"
+      p Wagon.all[wagon_name].take_capacity(capacity)
+    
+    when "show taked capacity"
+      p Wagon.all[wagon_name].taked_capacity
+    
+    when "show free capacity"
+      p Wagon.all[wagon_name].free_capacity
+    end
+  end
 end
 
 def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last_station_name: nil, manage_option: nil, i: nil, station_name: nil)
@@ -155,7 +225,8 @@ def train_set_route
 
   if Route.all.include?(route_name)
     Train.all[train_name].set_route(Route.all[route_name])
-  else 
+    Train.all[train_name].current_station.trains << Train.all[train_name]
+  else
     p "There's no such route to set!"
   end
 end

@@ -1,6 +1,7 @@
 require_relative 'company_name.rb'
 require_relative 'instance_counter.rb'
 require_relative 'validate.rb'
+require_relative 'wagon.rb'
 
 class Train
 
@@ -12,7 +13,7 @@ class Train
   include InstanceCounter
   include Validate
 
-  attr_reader :name, :number, :wagons, :route
+  attr_reader :name, :number, :wagons, :route, :current_station
   attr_accessor :current_speed
 
   class << self

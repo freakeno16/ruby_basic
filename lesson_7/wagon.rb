@@ -9,7 +9,7 @@ class Wagon
   include Validate
   include InstanceCounter
 
-  attr_reader :name, :type
+  attr_reader :name, :volume, :occupated_volume, :type
 
   class << self 
     def all
@@ -21,9 +21,10 @@ class Wagon
     end
   end
   
-  def initialize(name, type)
+  def initialize(name, volume)
     @name = name
-    @type = type
+    @volume = volume
+    @occupated_volume = 0
     self.class.register_instance
     validate!
   end
@@ -32,6 +33,6 @@ class Wagon
 
   def validate!
     raise "Name can't be nil!" if name.nil?
-    raise "Wrong wagon type!" if type != "passenger" && type != "freight"
+    # raise "Wrong wagon type!" if type != "passenger" && type != "freight"
   end
 end

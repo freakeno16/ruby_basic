@@ -26,6 +26,10 @@ class Station
     self.class.register_instance
     validate!
   end
+
+  def each_train(&block)
+    trains.each(&block)
+  end
   
   def add_train(train)
     @trains << train
