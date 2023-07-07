@@ -9,7 +9,7 @@ class Wagon
   include Validate
   include InstanceCounter
 
-  attr_reader :name, :volume, :occupated_volume, :type
+  attr_reader :name, :type
 
   class << self 
     def all
@@ -23,8 +23,6 @@ class Wagon
   
   def initialize(name, volume)
     @name = name
-    @volume = volume
-    @occupated_volume = 0
     self.class.register_instance
     validate!
   end

@@ -16,8 +16,14 @@ def handle_user_command
   when "create new station"
     create_new_station
 
+  when "show trains on station"
+    show_trains_on_station
+
   when "create new train"
     create_new_train
+
+  when "show train wagons"
+    show_train_wagons
 
   when "create new wagon"
     create_new_wagon
@@ -53,6 +59,14 @@ def create_new_station(station_name = nil)
   p Station.all
 end
 
+def show_trains_on_station
+  train_num = 0
+  p "Enter station name:"
+  station_name = gets.chomp
+
+  Station.all[station_name].show_trains { |t| p "Train №#{train_num += 1}: number: #{t.number}, type: #{t.type}, wagons: #{t.wagons}" }
+end
+
 def create_new_train
   p "Enter name of new train: "
   train_name = gets.chomp
@@ -80,6 +94,13 @@ def create_new_train
     p "Error: #{e.message}, retry please"
     create_new_train
   end
+end
+
+def show_train_wagons
+  p "Enter train name:"
+  train_name = gets.chomp
+
+  Train.all[train_name].show_wagons { |w| p w }
 end
 
 def create_new_wagon

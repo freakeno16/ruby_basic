@@ -13,7 +13,7 @@ class Train
   include InstanceCounter
   include Validate
 
-  attr_reader :name, :number, :wagons, :route, :current_station
+  attr_reader :name, :number, :type, :wagons, :route, :current_station
   attr_accessor :current_speed
 
   class << self
@@ -39,6 +39,10 @@ class Train
     validate!
   end
 
+  def show_wagons(&block)
+    wagons.each &block  
+  end
+
   def speed_up(speed)
     @current_speed += speed
     p "Your current speed: #{@current_speed}"
@@ -60,7 +64,7 @@ class Train
       p "There's no wagons to remove!"
     end
   end
-  
+
   def set_route(route)
     @route = route
     @current_station = route.stations[0]

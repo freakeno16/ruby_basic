@@ -3,7 +3,7 @@ class FreightWagon < Wagon
 
   def initialize(name, capacity)
     super
-    wagon_type = "freight"
+    @type = "freight"
     @capacity = capacity
   end
 

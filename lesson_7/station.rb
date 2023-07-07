@@ -27,8 +27,8 @@ class Station
     validate!
   end
 
-  def each_train(&block)
-    trains.each(&block)
+  def show_trains(&block)
+    trains.each &block
   end
   
   def add_train(train)
