@@ -5,7 +5,7 @@ require_relative 'wagon.rb'
 
 class Train
 
-  NUMBER_FORMAT = /^[a-z\d]{3}-*[a-z\d]{2}$/
+  TRAIN_NUMBER_FORMAT = /^[a-z\d]{3}-*[a-z\d]{2}$/
   
   @trains = {}
 
@@ -54,7 +54,7 @@ class Train
   end
     
   def add_wagon(wagon)
-    @wagons << wagon if @current_speed == 0 && @train_type == wagon.type
+    @wagons << wagon if @current_speed == 0 && type == wagon.type
   end
   
   def remove_wagon(wagon)
@@ -111,6 +111,6 @@ class Train
     raise "Name can't be nil!" if name.nil?
     raise "Number can't be nil!" if number.nil?
     raise "Number must be at least 5 symbols!" if number.length < 5
-    raise "Wrong number format!" if number !~ NUMBER_FORMAT
+    raise "Wrong number format!" if number !~ TRAIN_NUMBER_FORMAT
   end
 end

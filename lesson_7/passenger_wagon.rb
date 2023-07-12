@@ -1,7 +1,7 @@
 class PassengerWagon < Wagon
   attr_reader :name, :type, :places
 
-  def initialize(name, places)
+  def initialize(name, number, places)
     super
     @type = "passenger"
     @places = places

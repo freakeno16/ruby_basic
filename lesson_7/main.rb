@@ -60,11 +60,12 @@ def create_new_station(station_name = nil)
 end
 
 def show_trains_on_station
-  train_num = 0
+  train_str_num = 0
+  
   p "Enter station name:"
   station_name = gets.chomp
 
-  Station.all[station_name].show_trains { |t| p "Train №#{train_num += 1}: number: #{t.number}, type: #{t.type}, wagons: #{t.wagons}" }
+  Station.all[station_name].show_trains { |t| p "Train №#{train_str_num += 1}: number: #{t.number}, type: #{t.type}, wagons: #{t.wagons}" }
 end
 
 def create_new_train
@@ -97,34 +98,48 @@ def create_new_train
 end
 
 def show_train_wagons
+  wagon_str_num = 0
+
   p "Enter train name:"
   train_name = gets.chomp
 
-  Train.all[train_name].show_wagons { |w| p w }
+  if Train.all[train_name].type == "passenger"
+    Train.all[train_name].show_wagons { |w| p "Wagon №#{wagon_str_num += 1}: name: #{w.name}, type: #{w.type}, places: #{w.places}" }
+  elsif Train.all[train_name].type == "freight"
+    Train.all[train_name].show_wagons { |w| p "Wagon №#{wagon_str_num += 1}: name: #{w.name}, type: #{w.type}, capacity: #{w.capacity}" }
+  end
 end
 
 def create_new_wagon
   p "Enter wagon name:"
   wagon_name = gets.chomp
 
-  p "Enter wagon type: "
+  p "Enter wagon number:"
+  wagon_number = gets.to_i
+
+  p "Enter wagon type:"
   wagon_type = gets.chomp
 
-
+  begin
   case wagon_type
   when "passenger"
     p "How much places?:"
     wagon_places = gets.to_i
 
-    Wagon.add_wagon(PassengerWagon.new(wagon_name, wagon_places))
+    Wagon.add_wagon(PassengerWagon.new(wagon_name, wagon_number, wagon_places))
     p Wagon.all
 
   when "freight"
     p "How many capacity?:"
     wagon_capacity = gets.to_i
 
-    Wagon.add_wagon(FreightWagon.new(wagon_name, wagon_capacity))
+    Wagon.add_wagon(FreightWagon.new(wagon_name, wagon_number, wagon_capacity))
     p Wagon.all
+  end
+
+  rescue RuntimeError => e
+    p "Error: #{e.message}, retry please"
+    create_new_wagon
   end
 end
 

@@ -3,5 +3,6 @@ class FreightTrain < Train
   def initialize(name, number)
     super
     @type = "freight"
+    validate!
   end
 end
