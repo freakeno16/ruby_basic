@@ -32,7 +32,7 @@ class Train
   
   def initialize(name, number)
     @name = name
-    @number = number
+    @number = number.to_s
     @wagons = []
     @current_speed = 0
     self.class.register_instance
@@ -111,6 +111,6 @@ class Train
     raise "Name can't be nil!" if name.nil?
     raise "Number can't be nil!" if number.nil?
     raise "Number must be at least 5 symbols!" if number.length < 5
-    raise "Wrong number format!" if number !~ TRAIN_NUMBER_FORMAT
+    raise "Wrong number format!" if TRAIN_NUMBER_FORMAT !~ number
   end
 end

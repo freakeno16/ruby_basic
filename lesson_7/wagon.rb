@@ -26,7 +26,7 @@ class Wagon
   
   def initialize(name, number, volume)
     @name = name
-    @number = number
+    @number = number.to_s
     self.class.register_instance
     validate!
   end
@@ -36,6 +36,6 @@ class Wagon
   def validate!
     raise "Name can't be nil!" if name.nil?
     raise "Number can't be nil!" if number.nil?
-    # raise "Wrong number format!" if number !~ WAGON_NUMBER_FORMAT
+    raise "Wrong number format!" if WAGON_NUMBER_FORMAT !~ number
   end
 end

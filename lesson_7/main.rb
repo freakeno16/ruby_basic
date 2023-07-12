@@ -92,7 +92,7 @@ def create_new_train
   end
 
   rescue RuntimeError => e
-    p "Error: #{e.message}, retry please"
+    p "Error: #{e.message.downcase}, retry please"
     create_new_train
   end
 end
@@ -138,7 +138,7 @@ def create_new_wagon
   end
 
   rescue RuntimeError => e
-    p "Error: #{e.message}, retry please"
+    p "Error: #{e.message.downcase}, retry please"
     create_new_wagon
   end
 end
