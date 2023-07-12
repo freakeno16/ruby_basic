@@ -36,6 +36,6 @@ class Wagon
   def validate!
     raise "Name can't be nil!" if name.nil?
     raise "Number can't be nil!" if number.nil?
-    raise "Wrong number format!" if number !~ WAGON_NUMBER_FORMAT
+    # raise "Wrong number format!" if number !~ WAGON_NUMBER_FORMAT
   end
 end

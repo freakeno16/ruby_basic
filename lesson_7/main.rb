@@ -52,7 +52,7 @@ def handle_user_command
 end
 
 def create_new_station(station_name = nil)
-  p "Enter name of new station: "
+  p "Enter name of new station:"
   station_name = station_name || gets.chomp
 
   Station.add_station(Station.new(station_name))
@@ -69,13 +69,13 @@ def show_trains_on_station
 end
 
 def create_new_train
-  p "Enter name of new train: "
+  p "Enter name of new train:"
   train_name = gets.chomp
 
-  p "Enter number of new train: "
+  p "Enter number of new train:"
   train_number = gets.chomp
 
-  p "Enter train type: "
+  p "Enter train type:"
   train_type = gets.chomp
 
   begin
@@ -201,11 +201,11 @@ def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last
 
   case route_choice
   when "new"
-    p "Enter name of new route: "
+    p "Enter name of new route:"
     route_name = route_name || gets.chomp
-    p "Enter name of first station: "
+    p "Enter name of first station:"
     first_station_name = first_station_name || gets.chomp
-    p "Enter name of last station: "
+    p "Enter name of last station:"
     last_station_name = last_station_name || gets.chomp
 
     first_station = Station.add_station(Station.new(first_station_name))
@@ -221,13 +221,13 @@ def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last
 
     case manage_option
     when "add"
-      p "Enter route name that you want to change: "
+      p "Enter route name that you want to change:"
       route_name = route_name || gets.chomp
 
-      p "Enter name of station that you want to add: "
+      p "Enter name of station that you want to add:"
       station_name = station_name || gets.chomp
 
-      p "Where do you want to add station?: "
+      p "Where do you want to add station?:"
       i = i || gets.to_i
 
       if Station.all.include?(station_name)
@@ -237,10 +237,10 @@ def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last
         p "There's no such station to add!"
       end
     when "remove"
-      p "Enter name of route that you want to change: " 
+      p "Enter name of route that you want to change:" 
       route_name = route_name || gets.chomp
 
-      p "Enter name of station that you want to remove: "
+      p "Enter name of station that you want to remove:"
       station_name = station_name || gets.chomp
 
       if Station.all.include?(station_name)
@@ -253,10 +253,10 @@ def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last
 end
 
 def train_set_route
-  p "Enter train name for set route: "
+  p "Enter train name for set route:"
   train_name = gets.chomp
 
-  p "Enter name of route: "
+  p "Enter name of route:"
   route_name = gets.chomp
 
   if Route.all.include?(route_name)
@@ -268,10 +268,10 @@ def train_set_route
 end
 
 def train_add_wagon
-  p "Enter train name: "
+  p "Enter train name:"
   train_name = gets.chomp
 
-  p "Enter name of wagon: "
+  p "Enter name of wagon:"
   wagon_name = gets.chomp
 
   if Wagon.all.include?(wagon_name)
@@ -283,10 +283,10 @@ def train_add_wagon
 end
 
 def train_remove_wagon
-  p "Enter train name: "
+  p "Enter train name:"
   train_name = gets.chomp
 
-  p "Enter wagon name: "
+  p "Enter wagon name:"
   wagon_name = gets.chomp
 
   if Wagon.all.include?(wagon_name)
@@ -301,7 +301,7 @@ def train_move
   p "Where do you want to move (forward/back)?"
   train_move = gets.chomp
 
-  p "Enter train name: "
+  p "Enter train name:"
   train_name = gets.chomp
 
   case train_move
@@ -313,19 +313,19 @@ def train_move
 end
 
 def show_near_stations
-  p "Enter train name: "
+  p "Enter train name:"
   train_name = gets.chomp
 
   Train.all[train_name].near_stations
 
-  p "Enter name of station: "
+  p "Enter name of station:"
   station_name = gets.chomp
 
   p "Trains on station #{station_name}: #{Station.all[station_name].trains}"
 end
 
 loop do 
-  p "Choose your destiny: "
+  p "Choose your destiny:"
   handle_user_command
   p "print 'exit' if you want to stop"
   break if gets.chomp == "exit"
