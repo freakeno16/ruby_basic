@@ -1,6 +1,6 @@
-require_relative 'company_name.rb'
-require_relative 'validate.rb'
-require_relative 'instance_counter.rb'
+require_relative 'company_name'
+require_relative 'validate'
+require_relative 'instance_counter'
 
 class Wagon
   @wagons = {}
@@ -11,16 +11,16 @@ class Wagon
 
   attr_reader :name, :type
 
-  class << self 
+  class << self
     def all
       @wagons
     end
-  
+
     def add_wagon(wagon)
       @wagons[wagon.name] = wagon
     end
   end
-  
+
   def initialize(name, type)
     @name = name
     @type = type
@@ -32,6 +32,6 @@ class Wagon
 
   def validate!
     raise "Name can't be nil!" if name.nil?
-    raise "Wrong wagon type!" if type != "passenger" && type != "freight"
+    raise 'Wrong wagon type!' if type != 'passenger' && type != 'freight'
   end
 end

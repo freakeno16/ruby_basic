@@ -1,10 +1,9 @@
 require_relative 'instance_counter'
-require_relative 'validate.rb'
+require_relative 'validate'
 
-
-class Station 
+class Station
   @stations = {}
-  
+
   include InstanceCounter
   include Validate
 
@@ -14,7 +13,7 @@ class Station
     def all
       @stations
     end
-  
+
     def add_station(station)
       @stations[station.name] = station
     end
@@ -26,7 +25,7 @@ class Station
     self.class.register_instance
     validate!
   end
-  
+
   def add_train(train)
     @trains << train
   end
