@@ -1,20 +1,15 @@
 class FreightWagon < Wagon
-  attr_reader :name, :type, :capacity
+  attr_reader :name, :type, :capacity, :taked_capacity
 
   def initialize(name, number, capacity)
     super
-    @type = "freight"
+    @type = 'freight'
     @capacity = capacity
   end
 
   def take_capacity(capacity)
     @taked_capacity = 0
-    @capacity - capacity
     @taked_capacity += capacity
-  end
-
-  def taked_capacity
-    @taked_capacity
   end
 
   def free_capacity
