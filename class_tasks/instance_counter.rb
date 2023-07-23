@@ -1,4 +1,4 @@
-module InstanceCounter 
+module InstanceCounter
   def self.included(base)
     base.extend ClassMethods
     # base.include InstanceMethods
@@ -15,13 +15,12 @@ module InstanceCounter
     end
   end
 
+  #   module InstanceMethods
 
-#   module InstanceMethods
+  #     private
 
-#     private 
-
-#     def register_instance
-#       self.class.register_instance
-#     end
-#   end
+  #     def register_instance
+  #       self.class.register_instance
+  #     end
+  #   end
 end

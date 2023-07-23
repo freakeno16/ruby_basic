@@ -1,99 +1,105 @@
-require_relative 'train.rb'
-require_relative 'passenger_train.rb'
-require_relative 'freight_train.rb'
-require_relative 'station.rb'
-require_relative 'route.rb'
-require_relative 'wagon.rb'
+require_relative 'train'
+require_relative 'passenger_train'
+require_relative 'freight_train'
+require_relative 'station'
+require_relative 'route'
+require_relative 'wagon'
 
 def handle_user_command
-
   command = gets.chomp
 
   case command
 
-  when "create new station"
+  when 'create new station'
     create_new_station
 
-  when "create new train"
+  when 'create new train'
     create_new_train
 
-  when "create new wagon"
+  when 'create new wagon'
     create_new_wagon
 
-  when "route menu"
+  when 'route menu'
     route_menu
 
-  when "train set route"
+  when 'train set route'
     train_set_route
 
-  when "train add wagon"
+  when 'train add wagon'
     train_add_wagon
-  
-  when "train remove wagon"
+
+  when 'train remove wagon'
     train_remove_wagon
-  
-  when "train move"
+
+  when 'train move'
     train_move
 
-  when "show near stations"
+  when 'show near stations'
     show_near_stations
   end
 end
 
 def create_new_station(station_name = nil)
-  p "Enter name of new station: "
-  station_name = station_name || gets.chomp
+  p 'Enter name of new station: '
+  station_name ||= gets.chomp
 
   Station.add_station(Station.new(station_name))
   p Station.all
 end
 
 def create_new_train
-  p "Enter name of new train: "
+  p 'Enter name of new train: '
   train_name = gets.chomp
 
-  p "Enter number of new train: "
+  p 'Enter number of new train: '
   train_number = gets.chomp
 
-  p "Enter train type: "
+  p 'Enter train type: '
   train_type = gets.chomp
 
-  case train_type
-  when "passenger"
-    Train.add_train(PassengerTrain.new(train_name, train_number))
-    p Train.all
-  when "freight"
-    Train.add_train(FreightTrain.new(train_name, train_number))
-    p Train.all
-  else
-    p "Error!"
+  begin
+    case train_type
+    when 'passenger'
+      Train.add_train(PassengerTrain.new(train_name, train_number))
+      p 'Passenger train was created'
+      p Train.all
+
+    when 'freight'
+      Train.add_train(FreightTrain.new(train_name, train_number))
+      p 'Freight train was created'
+      p Train.all
+    end
+  rescue RuntimeError => e
+    p "Error: #{e.message}, retry please"
+    create_new_train
   end
 end
 
 def create_new_wagon
-  p "Enter wagon name: "
+  p 'Enter wagon name: '
   wagon_name = gets.chomp
 
-  p "Enter wagon type: "
+  p 'Enter wagon type: '
   wagon_type = gets.chomp
 
   Wagon.add_wagon(Wagon.new(wagon_name, wagon_type))
   p Wagon.all
 end
 
-def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last_station_name: nil, manage_option: nil, i: nil, station_name: nil)
+def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last_station_name: nil, manage_option: nil,
+               i: nil, station_name: nil)
   p "Enter 'new' to create new station"
   p "Enter 'manage' to manage"
-  route_choice = route_choice || gets.chomp
+  route_choice ||= gets.chomp
 
   case route_choice
-  when "new"
-    p "Enter name of new route: "
-    route_name = route_name || gets.chomp
-    p "Enter name of first station: "
-    first_station_name = first_station_name || gets.chomp
-    p "Enter name of last station: "
-    last_station_name = last_station_name || gets.chomp
+  when 'new'
+    p 'Enter name of new route: '
+    route_name ||= gets.chomp
+    p 'Enter name of first station: '
+    first_station_name ||= gets.chomp
+    p 'Enter name of last station: '
+    last_station_name ||= gets.chomp
 
     first_station = Station.add_station(Station.new(first_station_name))
 
@@ -101,34 +107,34 @@ def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last
 
     Route.add_route(Route.new(route_name, first_station, last_station))
     p Route.all
-  when "manage"
+  when 'manage'
     p "Enter 'add'/'remove' to manage"
 
-    manage_option = manage_option || gets.chomp
+    manage_option ||= gets.chomp
 
     case manage_option
-    when "add"
-      p "Enter route name that you want to change: "
-      route_name = route_name || gets.chomp
+    when 'add'
+      p 'Enter route name that you want to change: '
+      route_name ||= gets.chomp
 
-      p "Enter name of station that you want to add: "
-      station_name = station_name || gets.chomp
+      p 'Enter name of station that you want to add: '
+      station_name ||= gets.chomp
 
-      p "Where do you want to add station?: "
-      i = i || gets.to_i
+      p 'Where do you want to add station?: '
+      i ||= gets.to_i
 
       if Station.all.include?(station_name)
         Route.all[route_name].add_station(i, Station.all[station_name])
         p Route.all
-      else 
+      else
         p "There's no such station to add!"
       end
-    when "remove"
-      p "Enter name of route that you want to change: " 
-      route_name = route_name || gets.chomp
+    when 'remove'
+      p 'Enter name of route that you want to change: '
+      route_name ||= gets.chomp
 
-      p "Enter name of station that you want to remove: "
-      station_name = station_name || gets.chomp
+      p 'Enter name of station that you want to remove: '
+      station_name ||= gets.chomp
 
       if Station.all.include?(station_name)
         Route.all[route_name].remove_station(Station.all[station_name])
@@ -140,79 +146,79 @@ def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last
 end
 
 def train_set_route
-  p "Enter train name for set route: "
+  p 'Enter train name for set route: '
   train_name = gets.chomp
 
-  p "Enter name of route: "
+  p 'Enter name of route: '
   route_name = gets.chomp
 
   if Route.all.include?(route_name)
     Train.all[train_name].set_route(Route.all[route_name])
-  else 
+  else
     p "There's no such route to set!"
   end
 end
 
 def train_add_wagon
-  p "Enter train name: "
+  p 'Enter train name: '
   train_name = gets.chomp
 
-  p "Enter name of wagon: "
+  p 'Enter name of wagon: '
   wagon_name = gets.chomp
 
   if Wagon.all.include?(wagon_name)
     Train.all[train_name].add_wagon(Wagon.all[wagon_name])
     p Train.all[train_name]
-  else 
+  else
     p "There's no such wagon to add!"
   end
 end
 
 def train_remove_wagon
-  p "Enter train name: "
+  p 'Enter train name: '
   train_name = gets.chomp
 
-  p "Enter wagon name: "
+  p 'Enter wagon name: '
   wagon_name = gets.chomp
 
   if Wagon.all.include?(wagon_name)
     Train.all[train_name].remove_wagon(Wagon.all[wagon_name])
     p Train.all[train_name]
-  else 
+  else
     p "There's no wagon to remove!"
   end
 end
 
 def train_move
-  p "Where do you want to move (forward/back)?"
+  p 'Where do you want to move (forward/back)?'
   train_move = gets.chomp
 
-  p "Enter train name: "
+  p 'Enter train name: '
   train_name = gets.chomp
 
   case train_move
-  when "forward"
+  when 'forward'
     Train.all[train_name].send_to_next_station
-  when "back"
+  when 'back'
     Train.all[train_name].send_to_prev_station
   end
 end
 
 def show_near_stations
-  p "Enter train name: "
+  p 'Enter train name: '
   train_name = gets.chomp
 
   Train.all[train_name].near_stations
 
-  p "Enter name of station: "
+  p 'Enter name of station: '
   station_name = gets.chomp
 
   p "Trains on station #{station_name}: #{Station.all[station_name].trains}"
 end
 
-loop do 
-  p "Choose your destiny: "
+loop do
+  p 'Choose your destiny: '
   handle_user_command
   p "print 'exit' if you want to stop"
-  break if gets.chomp == "exit"
+  break if gets.chomp == 'exit'
 end
