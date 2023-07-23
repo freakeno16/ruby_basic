@@ -1,15 +1,17 @@
 require_relative 'company_name'
-require_relative 'validate'
 require_relative 'instance_counter'
+require_relative 'validate'
 
 class Wagon
+  WAGON_NUMBER_FORMAT = /^\d{1,}$/
+
   @wagons = {}
 
   include CompanyName
-  include Validate
   include InstanceCounter
+  include Validate
 
-  attr_reader :name, :type
+  attr_reader :name, :number, :type
 
   class << self
     def all
@@ -21,17 +23,18 @@ class Wagon
     end
   end
 
-  def initialize(name, type)
+  def initialize(name, number, _volume)
     @name = name
-    @type = type
+    @number = number.to_s
     self.class.register_instance
     validate!
   end
 
-  protected
+  private
 
   def validate!
     raise "Name can't be nil!" if name.nil?
-    raise 'Wrong wagon type!' if type != 'passenger' && type != 'freight'
+    raise "Number can't be nil!" if number.nil?
+    raise 'Wrong number format!' if WAGON_NUMBER_FORMAT !~ number
   end
 end

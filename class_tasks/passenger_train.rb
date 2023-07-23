@@ -1,8 +1,15 @@
 class PassengerTrain < Train
-  attr_reader :train_type
+  attr_reader :type
 
   def initialize(name, number)
     super
-    @train_type = 'passenger'
+    @type = 'passenger'
+  end
+
+  private 
+
+  def validate!
+    super
+    raise "Wrong wagon type" if type != 'passenger'
   end
 end
