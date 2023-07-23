@@ -30,7 +30,7 @@ class Wagon
     validate!
   end
 
-  protected
+  private
 
   def validate!
     raise "Name can't be nil!" if name.nil?
