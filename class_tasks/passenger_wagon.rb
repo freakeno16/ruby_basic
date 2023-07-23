@@ -9,7 +9,11 @@ class PassengerWagon < Wagon
 
   def take_place
     @taked_places ||= 0
-    @taked_places += 1
+    if free_places == 0
+      p "There's no free places left"
+    else
+      @taked_places += 1
+    end
   end
 
   def taked_places

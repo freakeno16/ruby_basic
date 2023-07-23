@@ -38,7 +38,7 @@ class Route
     stations.delete(station)
   end
 
-  protected
+  private
 
   def validate!
     raise "Name can't be nil!" if name.nil?

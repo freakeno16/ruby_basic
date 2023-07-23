@@ -197,8 +197,7 @@ def wagon_menu
   end
 end
 
-def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last_station_name: nil, manage_option: nil,
-               i: nil, station_name: nil)
+def route_menu(route_choice: nil, route_name: nil, first_station_name: nil, last_station_name: nil, manage_option: nil, i: nil, station_name: nil)
   p "Enter 'new' to create new station"
   p "Enter 'manage' to manage"
   route_choice ||= gets.chomp

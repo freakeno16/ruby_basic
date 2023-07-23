@@ -5,4 +5,11 @@ class PassengerTrain < Train
     super
     @type = 'passenger'
   end
+
+  private 
+
+  def validate!
+    super
+    raise "Wrong wagon type" if type != 'passenger'
+  end
 end

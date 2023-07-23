@@ -104,7 +104,7 @@ class Train
     p "next: #{@route.stations[i + 1]&.name}"
   end
 
-  protected
+  private
 
   def validate!
     raise "Name can't be nil!" if name.nil?
