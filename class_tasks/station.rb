@@ -13,7 +13,7 @@ class Station
     def all
       @stations
     end
-  
+
     def add_station(station)
       @stations[station.name] = station
     end
@@ -24,6 +24,10 @@ class Station
     @trains = []
     self.class.register_instance
     validate!
+  end
+
+  def show_trains(&block)
+    trains.each(&block)
   end
 
   def add_train(train)
@@ -38,7 +42,7 @@ class Station
     @trains.select { |t| t.type == type }
   end
 
-  private
+  protected
 
   def validate!
     raise "Name can't be nil!" if name.nil?

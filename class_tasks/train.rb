@@ -1,9 +1,10 @@
 require_relative 'company_name'
 require_relative 'instance_counter'
 require_relative 'validate'
+require_relative 'wagon'
 
 class Train
-  NUMBER_FORMAT = /^[a-z\d]{3}-*[a-z\d]{2}$/
+  TRAIN_NUMBER_FORMAT = /^[a-z\d]{3}-*[a-z\d]{2}$/
 
   @trains = {}
 
@@ -11,7 +12,7 @@ class Train
   include InstanceCounter
   include Validate
 
-  attr_reader :name, :number, :wagons, :route
+  attr_reader :name, :number, :type, :wagons, :route, :current_station
   attr_accessor :current_speed
 
   class << self
@@ -30,11 +31,15 @@ class Train
 
   def initialize(name, number)
     @name = name
-    @number = number
+    @number = number.to_s
     @wagons = []
     @current_speed = 0
     self.class.register_instance
     validate!
+  end
+
+  def show_wagons(&block)
+    wagons.each(&block)
   end
 
   def speed_up(speed)
@@ -48,7 +53,7 @@ class Train
   end
 
   def add_wagon(wagon)
-    @wagons << wagon if @current_speed == 0 && @train_type == wagon.type
+    @wagons << wagon if @current_speed == 0 && type == wagon.type
   end
 
   def remove_wagon(wagon)
@@ -105,6 +110,6 @@ class Train
     raise "Name can't be nil!" if name.nil?
     raise "Number can't be nil!" if number.nil?
     raise 'Number must be at least 5 symbols!' if number.length < 5
-    raise 'Wrong number format!' if number !~ NUMBER_FORMAT
+    raise 'Wrong number format!' if TRAIN_NUMBER_FORMAT !~ number
   end
 end
