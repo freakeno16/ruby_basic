@@ -6,4 +6,10 @@ class FreightTrain < Train
     @type = 'freight'
     validate!
   end
+
+  private
+
+  def validate!
+    raise "Wrong wagon type" if type != 'freight'
+  end
 end

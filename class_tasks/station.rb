@@ -1,9 +1,11 @@
 require_relative 'instance_counter'
+require_relative 'validate'
 
-class Station 
+class Station
   @stations = {}
-  
+
   include InstanceCounter
+  include Validate
 
   attr_reader :trains, :name
 
@@ -11,7 +13,7 @@ class Station
     def all
       @stations
     end
-  
+
     def add_station(station)
       @stations[station.name] = station
     end
@@ -20,9 +22,14 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
-    register_instance
+    self.class.register_instance
+    validate!
   end
-  
+
+  def show_trains(&block)
+    trains.each(&block)
+  end
+
   def add_train(train)
     @trains << train
   end
@@ -33,5 +40,11 @@ class Station
 
   def trains_by_type(type)
     @trains.select { |t| t.type == type }
+  end
+
+  private
+
+  def validate!
+    raise "Name can't be nil!" if name.nil?
   end
 end

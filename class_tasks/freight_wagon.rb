@@ -8,8 +8,13 @@ class FreightWagon < Wagon
   end
 
   def take_capacity(capacity)
-    @taked_capacity = 0
-    @taked_capacity += capacity
+    @taked_capacity ||= 0
+    if free_capacity >= capacity
+      @taked_capacity += capacity
+    else 
+      p "There's no free capacity"
+      p "#{@free_capacity} capacity left"
+    end
   end
 
   def free_capacity
