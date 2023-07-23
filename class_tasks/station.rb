@@ -13,7 +13,7 @@ class Station
     def all
       @stations
     end
-
+  
     def add_station(station)
       @stations[station.name] = station
     end
@@ -38,7 +38,7 @@ class Station
     @trains.select { |t| t.type == type }
   end
 
-  protected
+  private
 
   def validate!
     raise "Name can't be nil!" if name.nil?
