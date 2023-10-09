@@ -8,7 +8,7 @@ module Accessors
       define_method("#{arg}=") do |value|
         
         if instance_variable_get("@#{arg}_old")
-          instance_variable_set("@#{arg}_old", instance_variable_get("@#{arg}_old") << value)
+          instance_variable_set("@#{arg}_old", instance_variable_get("@#{arg}_old") + [value])
           instance_variable_set(var_name, value)
         else
           instance_variable_set(var_name, value)
