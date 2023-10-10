@@ -18,14 +18,28 @@ module Accessors
         define_method("#{arg}_history") { instance_variable_get("@#{arg}_old") }
     end
   end
+
+  def strong_attr_accessor(attr_name, attr_class)
+    var_name = "@#{attr_name}".to_sym
+
+    define_method(name) { instance_variable_get(var_name) }
+    define_method("#{attr_name}=") do |value| 
+      if value.is_a? attr_class
+        instance_variable_set(var_name, value)
+      else
+        raise "Wrong attr_class, must be #{attr_class}, retry please"
+      end
+    end
+  end
 end
+
+ 
 
 class Foo
   
   extend Accessors
   
-  attr_accessor_with_history :a, :b
+  # attr_accessor_with_history :a, :b
+  # strong_attr_accessor :a, :Integer
 end
-
-
 
