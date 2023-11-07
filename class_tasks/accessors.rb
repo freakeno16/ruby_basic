@@ -33,13 +33,10 @@ module Accessors
   end
 end
 
- 
-
 class Foo
   
   extend Accessors
-  
-  # attr_accessor_with_history :a, :b
-  # strong_attr_accessor :a, :Integer
-end
 
+  # attr_accessor_with_history :a, :b
+  strong_attr_accessor :a, :Integer
+end
