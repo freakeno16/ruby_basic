@@ -5,39 +5,50 @@ module Validation
   end
 
   module ClassMethods
-    def validate(name, type, *args)
-      var_name = "@#{name}".to_sym
+    def validations
+      @validations
+    end
 
-      define_method(name) { instance_variable_get(var_name) }
-      define_method("#{name}=") do |value|
-        if type == :presence
-          raise "Value can't be empty string or nil!" if ['', nil].include?(value)
+    def validate(name, type, arg=nil)
+      
+      @validations ||= [] 
+      case type
+      when :presence
+      
+        # validations << "p send(instance_eval(\":#{name}\"))"
+        validations << "lambda {raise \"Value can't be empty string or nil!\" if ['', nil].include?(send(instance_eval(\":#{name}\")))}"
 
-          instance_variable_set(var_name, value)
-        end
-
-        args.each do |arg|
-          case type
-          when :format
-            raise 'Value must be match the regexp!' if value !~ arg
-
-            instance_variable_set(var_name, value)
-          when :type
-            raise 'Value must be match the class!' unless value.is_a?(arg)
-
-            instance_variable_set(var_name, value)
-          end
-        end
+      # when :format
+      #   validations << "raise 'Value must be match the regexp!' if #{instance_eval("@#{name}")} !~ #{arg}"
+      # when :type
+      #   validations << "raise 'Value must be match the class!' unless #{instance_eval("@#{name}")}.is_a?(#{arg})"
       end
+
+      instance_variable_set("@validations", (instance_variable_get("@validations") || []) + validations)
     end
   end
 
   module InstanceMethods
     def validate!
+      self.class.validations.each do |v|
+        foo = eval(v)
+        p foo.call
+      end
     end
   end
 end
 
+class Foo
+  attr_reader :a
 
+  include Validation
+  
+  validate :a, :presence
 
+  def initialize(b)
+    @b = b
+    validate!
+  end
+end
 
+f = Foo.new 123
