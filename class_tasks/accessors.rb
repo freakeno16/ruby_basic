@@ -38,5 +38,5 @@ class Foo
   extend Accessors
 
   # attr_accessor_with_history :a, :b
-  strong_attr_accessor :a, :Integer
+  strong_attr_accessor :a, Integer
 end
