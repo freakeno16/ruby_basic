@@ -17,7 +17,7 @@ module Accessors
             instance_variable_set(var_name, value)
           else
             instance_variable_set(var_name, value)
-            instance_variable_set("@#{arg}_old", old)
+            instance_variable_set("@#{arg}_old", [old])
           end
         end
         define_method("#{arg}_history") { instance_variable_get("@#{arg}_old") || [] }
@@ -37,12 +37,12 @@ module Accessors
   end
 end
 
-class Foo
+class Foo 
   include Accessors
-
+  
   attr_accessor_with_history :a, :b
 
   def initialize(a)
-    @a = a
+    @a = a 
   end
 end
