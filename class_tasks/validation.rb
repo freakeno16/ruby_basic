@@ -45,8 +45,8 @@ class Foo
   
   validate :a, :presence
 
-  def initialize(b)
-    @b = b
+  def initialize(a)
+    @a = a
     validate!
   end
 end
