@@ -4,8 +4,8 @@ class Player
 
   def initialize(name)
     @name = name.capitalize
-    @hand = []
-    @sum = 0
+    @hand = $cards.sample(2)
+    @sum = hand.first.value + hand.last.value
     @bank = 100
   end
 end

@@ -4,8 +4,8 @@ class Dealer
 
   def initialize
     @name = "Dealer"
-    @hand = []
-    @sum = 0
+    @hand = $cards.sample(2)
+    @sum = hand.first.value + hand.last.value
     @bank = 100
   end
 end
