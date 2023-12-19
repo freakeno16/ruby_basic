@@ -8,7 +8,7 @@ class Card
   end
 
   def self.suits
-    @suits = ["+", "<3", "^", "<>"]
+    @suits = %w[+ <3 ^ <>]
   end
 
   def self.generate_cards
@@ -76,12 +76,12 @@ class Card
   def initialize(face, suit)
     @face = face
     @suit = suit
-    valdate!
+    validate!
   end
 
   private
 
-  def valdate!
+  def validate!
     if face.class == Integer
       @value = face
     elsif face == Card.faces[-1]
