@@ -8,6 +8,7 @@ class Host
     if o.hand.length == 2
       o.hand << card = $cards.sample(1)[0]
       o.sum += card.value
+
       if o.name == 'Dealer'
         puts "Dealer's cards are hidden:"
         puts '*'
@@ -39,6 +40,9 @@ class Host
     p_rate = 21 - p.sum.abs
     d_rate = 21 - d.sum.abs
 
+    p_rate *= -1 if p_rate.negative?
+    d_rate *= -1 if d_rate.negative?
+
     if p.sum <= 21 && d.sum > 21
       puts "#{p.name} wins, #{d.name} has to many points!"
       p.bank += d.bank
@@ -64,7 +68,7 @@ class Host
 
     puts "#{p.name} bank: #{p.bank}$"
     puts "#{d.name} bank: #{d.bank}$"
-    puts 'Wanna retry?'
+    puts 'Wanna retry? [enter/no]'
   end
 
   def self.player_choice(p)

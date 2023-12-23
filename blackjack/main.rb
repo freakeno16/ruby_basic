@@ -19,6 +19,8 @@ loop do
   $players << p = Player.new(player_name)
 
   puts "#{p.name} join the game!"
+  puts "#{p.name} remember, you can only [Take/Pass/Open]"
+  sleep(1)
 
   puts "Here's #{p.name}'s cards:"
   p.hand.each { |c| puts "|#{c.face}" + "#{c.suit}|" }
@@ -36,8 +38,8 @@ loop do
 
   Host.player_choice(p)
 
-  answer = gets.chomp.capitalize!
+  answer = gets.chomp.capitalize
   $players.delete_at(0)
   $players.delete_at(0)
-  break if answer == 'No'
+  break if answer == 'no'
 end
