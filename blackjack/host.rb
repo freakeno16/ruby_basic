@@ -1,30 +1,4 @@
 class Host
-  def self.place_a_bet(p, d)
-    p.bank -= 10
-    d.bank -= 10
-  end
-
-  def self.take_card(o)
-    if o.hand.length == 2
-      o.hand << card = $cards.sample(1)[0]
-      o.sum += card.value
-
-      if o.name == 'Dealer'
-        puts "Dealer's cards are hidden:"
-        puts '*'
-        puts '*'
-        puts '*'
-        puts 'Total: **'
-      else
-        puts "#{o.name}'s cards:"
-        o.hand.each { |card| puts "|#{card.face}" + "#{card.suit}|" }
-        puts "Total: #{o.sum}"
-      end
-    else
-      puts "You can't take more then 3 cards!"
-    end
-  end
-
   def self.open_cards(p, d)
     puts 'Opening the players cards....'
     sleep(1)
@@ -71,27 +45,27 @@ class Host
     puts 'Wanna retry? [enter/no]'
   end
 
-  def self.player_choice(p)
+  def self.player_choice(p, d)
     choice = gets.chomp.capitalize
     case choice
     when 'Pass'
-      Host.dealer_choice($players[0])
+      Host.dealer_choice(d, p)
     when 'Take'
-      Host.take_card(p)
-      Host.dealer_choice($players[0])
+      p.take_card
+      Host.dealer_choice(d, p)
     when 'Open'
-      Host.open_cards($players[0], $players[1])
+      Host.open_cards(p, d)
     end
   end
 
-  def self.dealer_choice(d)
+  def self.dealer_choice(d, p)
     if d.sum < 17 && d.hand.length < 3
       puts "#{d.name} takes card"
-      Host.take_card(d)
-      Host.open_cards($players[1], d) if $players[1].hand.length == 3 && d.hand.length == 3
+      d.take_card
+      Host.open_cards(p, d) if p.hand.length == 3 && d.hand.length == 3
     else
       puts "#{d.name} skips his turn"
     end
-    Host.player_choice($players[1])
+    Host.player_choice(p, d)
   end
 end

@@ -1,7 +1,11 @@
 class Card
-  attr_reader :face, :suit, :value
+  attr_accessor :face, :suit, :value
 
-  $cards = []
+  @cards = []
+
+  class << self
+    attr_reader :cards
+  end
 
   def self.faces
     @faces = [2, 3, 4, 5, 6, 7, 8, 9, :K, :Q, :J, :A]
@@ -12,7 +16,7 @@ class Card
   end
 
   def self.generate_cards
-    $cards.push(
+    Card.cards.push(
       Card.new(2, '+'),
       Card.new(3, '+'),
       Card.new(4, '+'),
@@ -63,7 +67,7 @@ class Card
       Card.new(:A, '<>')
     )
 
-    $cards.shuffle!
+    Card.cards.shuffle!
   end
 
   def initialize(face, suit)
@@ -77,10 +81,10 @@ class Card
   def validate!
     @value = if face.instance_of?(Integer)
                face
-             elsif face == Card.faces[-1]
-               11
+             elsif face == :A
+      11
              else
-               10
+      10
              end
 
     raise "Face only can be #{Card.faces.each { |f| print f }}" unless Card.faces.include?(face)
