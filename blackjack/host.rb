@@ -6,53 +6,58 @@ class Host
     puts "Here's #{d.name}'s cards:"
     d.hand.each { |c| puts "|#{c.face}" + "#{c.suit}|" }
     puts "Total: #{d.sum}"
+    sleep(1)
 
     puts "Here's #{p.name}'s cards:"
     p.hand.each { |c| puts "|#{c.face}" + "#{c.suit}|" }
     puts "Total: #{p.sum}"
 
-    p_rate = 21 - p.sum.abs
-    d_rate = 21 - d.sum.abs
+    p_rate = 21 - p.sum
+    d_rate = 21 - d.sum
 
     p_rate *= -1 if p_rate.negative?
     d_rate *= -1 if d_rate.negative?
 
     if p.sum <= 21 && d.sum > 21
-      puts "#{p.name} wins, #{d.name} has to many points!"
+      puts "------------------------------------------------\n#{p.name} wins, #{d.name} has to many points!"
       p.bank += d.bank
       d.bank = 0
     elsif d.sum <= 21 && p.sum > 21
-      puts "#{d.name} wins, #{p.name} has to many points!"
+      puts "------------------------------------------------\n#{d.name} wins, #{p.name} has to many points!"
       d.bank += p.bank
       p.bank = 0
     elsif p_rate < d_rate
-      puts "#{p.name} wins!"
+      puts "------------------------------------------------\n#{p.name} wins!"
       p.bank += d.bank
       d.bank = 0
     elsif d_rate < p_rate
-      puts "#{d.name} wins!"
+      puts "------------------------------------------------\n#{d.name} wins!"
       d.bank += p.bank
       p.bank = 0
     end
+
     if p.sum == d.sum
-      puts 'Draw!'
+      puts "------------------------------------------------\nDraw!"
       d.bank = 100
       p.bank = 100
     end
 
     puts "#{p.name} bank: #{p.bank}$"
-    puts "#{d.name} bank: #{d.bank}$"
-    puts 'Wanna retry? [enter/no]'
+    puts "#{d.name} bank: #{d.bank}$\n------------------------------------------------"
   end
 
   def self.player_choice(p, d)
-    choice = gets.chomp.capitalize
+    choice = gets.chomp.capitalize!
     case choice
     when 'Pass'
       Host.dealer_choice(d, p)
     when 'Take'
       p.take_card
+      if p.hand.length == 3 && d.hand.length == 3
+        Host.open_cards(p, d)
+      else
       Host.dealer_choice(d, p)
+      end
     when 'Open'
       Host.open_cards(p, d)
     end

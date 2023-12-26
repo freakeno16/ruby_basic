@@ -33,6 +33,7 @@ loop do
 
   Host.player_choice(p, d)
 
+  puts "Wanna retry? [enter/no]"
   answer = gets.chomp.capitalize!
   break if answer == 'No'
 end

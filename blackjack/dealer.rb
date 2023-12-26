@@ -1,5 +1,3 @@
-# require_relative 'card'
-
 class Dealer
   attr_accessor :name, :hand, :bank, :sum
 
