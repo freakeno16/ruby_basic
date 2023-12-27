@@ -53,6 +53,12 @@ class Host
       Host.dealer_choice(d, p)
     when 'Take'
       p.take_card
+
+      puts "#{p.name} takes card"
+      puts "Here's #{p.name}'s cards:"
+      p.hand.each { |c| puts "|#{c.face}" + "#{c.suit}|" }
+      puts "Total: #{p.sum}"
+
       if p.hand.length == 3 && d.hand.length == 3
         Host.open_cards(p, d)
       else
@@ -65,8 +71,15 @@ class Host
 
   def self.dealer_choice(d, p)
     if d.sum < 17 && d.hand.length < 3
-      puts "#{d.name} takes card"
       d.take_card
+
+      puts "#{d.name} takes card"
+      puts "Dealer's cards are hidden:"
+      puts '*'
+      puts '*'
+      puts '*'
+      puts 'Total: **'
+
       Host.open_cards(p, d) if p.hand.length == 3 && d.hand.length == 3
     else
       puts "#{d.name} skips his turn"
