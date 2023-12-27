@@ -3,7 +3,7 @@ class Dealer
 
   def initialize
     @name = 'Dealer'
-    @hand = Card.cards.sample(2)
+    @hand = Card.cards.sample(2); ace_val
     @bank = 100
     @sum = hand.first.value + hand.last.value
   end
@@ -15,5 +15,12 @@ class Dealer
 
   def place_bet
     @bank -= 10
+  end
+
+  def ace_val
+    if hand.first.face == :A && hand.last.face == :A
+      hand.first.value = 11
+      hand.last.value = 1
+    end
   end
 end

@@ -56,7 +56,7 @@ class Host
       if p.hand.length == 3 && d.hand.length == 3
         Host.open_cards(p, d)
       else
-      Host.dealer_choice(d, p)
+        Host.dealer_choice(d, p)
       end
     when 'Open'
       Host.open_cards(p, d)
