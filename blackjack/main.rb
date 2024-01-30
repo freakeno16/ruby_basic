@@ -19,6 +19,7 @@ loop do
   puts "Here's #{p.name}'s cards:"
   p.hand.each { |c| puts "|#{c.face}" + "#{c.suit}|" }
   puts "Total: #{p.sum}"
+  
   puts "Dealer's cards are hidden:"
   puts '*'
   puts '*'
